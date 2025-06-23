@@ -1,12 +1,11 @@
 # Chrome Built-in AI
-- **Client-side AI** inference occurs on-device, which can be incredibly powerful alongside any existing server-side setup.
-  Built-in AI is one form of client-side AI which brings models to the browser, protecting sensitive data and improving latency.
-- Google is developing **web platform APIs** and browser features designed to work with AI models, expert models and large language models (LLMs), built in the browser. This includes Gemini Nano, the most efficient version of the Gemini family of LLMs, designed to run locally on most modern desktop and laptop computers. With built-in AI, your website or web application can perform AI-powered tasks, without needing to deploy, manage, or self-host AI models.
+- **Built-in AI** is one form of client-side AI which brings models to the browser, protecting sensitive data and improving latency. **Client-side AI** inference occurs on-device, which can be incredibly powerful alongside any existing server-side setup.
+- Google is developing **web platform APIs** and browser features designed to work with AI models, expert models and large language models (LLMs), built in the browser. This includes **Gemini Nano**, the most efficient version of the Gemini family of LLMs, designed to run locally on most modern desktop and laptop computers. With built-in AI, your website or web application can perform AI-powered tasks, without needing to deploy, manage, or self-host AI models.
 
 ## Built-in AI APIs
 There are several built-in AI APIs available at different stages of development. 
 Some are in Chrome stable, others are available to all developers in origin trials, and some are only available to Early Preview Program (EPP) participants.
-You can check availability of different APIS in [Built-in AI APIs Official Documentation](https://developer.chrome.com/docs/ai/built-in-apis)
+You can check availability of different APIS in [Built-in AI APIs Official Documentation](https://developer.chrome.com/docs/ai/built-in-apis).   
 Below you can find the list of APIs along with their official documentation with code snippets to try:
 - [**Translator API**](https://developer.chrome.com/docs/ai/translator-api)  
   Use the Translator API in Chrome to translate text with AI models provided in the browser.
@@ -55,18 +54,18 @@ The Prompt API, Summarizer API, Writer API, and Rewriter API work in Chrome when
 
 ## Getting started
 Best way to get started is to [install Chrome Canary](https://www.google.com/chrome/canary/) and join [the early preview program](https://developer.chrome.com/docs/ai/join-epp) in order to leverage Chrome built-in APIs full capabilities.
-Below are steps to test Chrome Built-in APIs
+Below are steps to enable and test Chrome Built-in APIs:
 - [Download Chrome Canary](https://www.google.com/chrome/canary/) and install it.
 - Open **`chrome://flags`** to enable necessary flags:
   - `#optimization-guide-on-device-model` (Set to `"Enabled BypassPerfRequirement"` or `"Enabled"`)
   - `#prompt-api-for-gemini-nano` (Set to `"Enabled"`)
   - Look also for other related flags and enable them, like `#summarization-api-for-gemini-nano`, `#rewriter-api-for-gemini-nano`, `#writer-api-for-gemini-nano`, etc.
 - Restart Canary: After changing flags, relaunch Chrome Canary. 
-- Check Components: Go to chrome://components and look for `"Optimization Guide On Device Model."`. If it doesn't appear, wait for some time — sometimes it takes a bit more time for the component to appear and for the browser to download it. You may also relaunch your browser or restart your PC and check again. Ensure it has a version number (e.g., 2024.x.x.x).
+- Check Components: Go to `chrome://components` and look for `Optimization Guide On Device Model.`. If it doesn't appear, wait for some time - sometimes it takes a bit more time for the component to appear and for the browser to download it. You may also relaunch your browser or restart your PC and check again. Ensure it has a version number (e.g., 2024.x.x.x).
   If it doesn't, click "Check for update" to try and force the model download. This can take some time and requires a stable internet connection.
-- Check **`chrome://components`** to make sure the model is downloaded. Check the status of the model and check for updates.
+- Check `chrome://components` to make sure the model is downloaded. Check the status of the model and check for updates.
 - Open browser console and test if AI APIs are enabled. In the Chrome Canary console:
-  - Run `await LanguageModel.availability()` to verify the runtime is 'available'.
+  - Run `await LanguageModel.availability()` to verify the runtime is `'available'`.
   - Run `window.ai` to make sure that prompt API model is fully downloaded and capable. If it is `undefined`, it means Gemini Nano was not fully installed and capable to work on your machine.
   While in this case you can use simple text base prompt API and other AI APIs functionalities, you may not be able to use image and audio related heavy features.
   In this case, check [Hardware Requirements](#hardware-requirements) listed above to make sure they are fully met in your device.
@@ -74,10 +73,10 @@ Below are steps to test Chrome Built-in APIs
 
 ## Documentation & References
 - [Official Google Documentation for Built-in APIs](https://developer.chrome.com/docs/ai/built-in-apis)
-- [The Early Preview Program](https://developer.chrome.com/docs/ai/join-epp)
+- [The Early Preview Program for Google Built-in AI APIs](https://developer.chrome.com/docs/ai/join-epp)
   - [Public Discussion Mailing List](https://groups.google.com/a/chromium.org/g/chrome-ai-dev-preview-discuss?pli=1)
   - [Google Developer Community on Discord](https://discord.com/invite/zzj2ywFx8B)
-- [Collection of client-side AI demos](https://github.com/GoogleChromeLabs/web-ai-demos)
+- [Official Collection of Client-side AI Demos](https://github.com/GoogleChromeLabs/web-ai-demos)
 - [Built-in AI Apis Demo by Thomas Steiner](https://local-first-conf-rocks.glitch.me/)
 - **AI Right in the Browser with Chrome’s Built-in AI APIs** - Presentation by [Thomas Steiner](https://www.linkedin.com/in/thomassteinerlinkedin/) at JSNation, June 2025. 
   - [Google docs presentation](https://docs.google.com/presentation/d/1E1d8yOi0tsRQ8n5rVXOfBNl6X74GvzgldJXyycoHpHE/edit?slide=id.g35d8303de8b_1_4#slide=id.g35d8303de8b_1_4)
