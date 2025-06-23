@@ -61,24 +61,26 @@ Below are steps to test Chrome Built-in APIs
   - `#optimization-guide-on-device-model` (Set to `"Enabled BypassPerfRequirement"` or `"Enabled"`)
   - `#prompt-api-for-gemini-nano` (Set to `"Enabled"`)
   - Look also for other related flags and enable them, like `#summarization-api-for-gemini-nano`, `#rewriter-api-for-gemini-nano`, `#writer-api-for-gemini-nano`, etc.
-- Restart Canary: After changing flags, relaunch Chrome Canary.
-- Check Components: go to **`chrome://components`** and look for `"Optimization Guide On Device Model."` Ensure it has a version number (e.g., 2024.x.x.x). If it doesn't, click `"Check for update"` to try and force the model download. This can take some time and requires a stable internet connection.
+- Restart Canary: After changing flags, relaunch Chrome Canary. 
+- Check Components: Go to chrome://components and look for `"Optimization Guide On Device Model."`. If it doesn't appear, wait for some time — sometimes it takes a bit more time for the component to appear and for the browser to download it. You may also relaunch your browser or restart your PC and check again. Ensure it has a version number (e.g., 2024.x.x.x).
+  If it doesn't, click "Check for update" to try and force the model download. This can take some time and requires a stable internet connection.
 - Check **`chrome://components`** to make sure the model is downloaded. Check the status of the model and check for updates.
 - Open browser console and test if AI APIs are enabled. In the Chrome Canary console:
   - Run `await LanguageModel.availability()` to verify the runtime is 'available'.
   - Run `window.ai` to make sure that prompt API model is fully downloaded and capable. If it is `undefined`, it means Gemini Nano was not fully installed and capable to work on your machine.
   While in this case you can use simple text base prompt API and other AI APIs functionalities, you may not be able to use image and audio related heavy features.
-  In this case, check Hardware Requirements listed above to make sure they are fully met in your device.
+  In this case, check [Hardware Requirements](#hardware-requirements) listed above to make sure they are fully met in your device.
 
-## Demos
-- [Collection of client-side AI demos](https://github.com/GoogleChromeLabs/web-ai-demos)
-- Presentation by [Thomas Steiner](https://www.linkedin.com/in/thomassteinerlinkedin/) during JSNation June 2025 about Browser built-in AI APIs:
-  - [Google docs presentation](https://docs.google.com/presentation/d/1E1d8yOi0tsRQ8n5rVXOfBNl6X74GvzgldJXyycoHpHE/edit?slide=id.g35d8303de8b_1_4#slide=id.g35d8303de8b_1_4)
-  - [Project demo](https://tomayac.github.io/prompt-api-sqlite/)
 
-## Documentation
+## Documentation & References
 - [Official Google Documentation for Built-in APIs](https://developer.chrome.com/docs/ai/built-in-apis)
 - [The Early Preview Program](https://developer.chrome.com/docs/ai/join-epp)
   - [Public Discussion Mailing List](https://groups.google.com/a/chromium.org/g/chrome-ai-dev-preview-discuss?pli=1)
   - [Google Developer Community on Discord](https://discord.com/invite/zzj2ywFx8B)
+- [Collection of client-side AI demos](https://github.com/GoogleChromeLabs/web-ai-demos)
+- [Built-in AI Apis Demo by Thomas Steiner](https://local-first-conf-rocks.glitch.me/)
+- **AI Right in the Browser with Chrome’s Built-in AI APIs** - Presentation by [Thomas Steiner](https://www.linkedin.com/in/thomassteinerlinkedin/) at JSNation, June 2025. 
+  - [Google docs presentation](https://docs.google.com/presentation/d/1E1d8yOi0tsRQ8n5rVXOfBNl6X74GvzgldJXyycoHpHE/edit?slide=id.g35d8303de8b_1_4#slide=id.g35d8303de8b_1_4)
+  - [Project demo](https://tomayac.github.io/prompt-api-sqlite/)
+- **Practical Web AI: Built-In, Browser Based, Brilliant** - Presentation by [Phil Nash](https://www.linkedin.com/in/philnash/) during JSNation, June 2025. 
 

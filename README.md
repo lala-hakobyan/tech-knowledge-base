@@ -3,7 +3,7 @@ Notes, insights & best practices for a full stack journey
 
 # License: Read-Only Notice
 - This project is released under the [MIT License](https://github.com/lala-hakobyan/tech-knowledge-base/blob/main/LICENSE).
-- You are welcome to clone, explore, and reuse it for educational or benchmarking purposes.
+- You are welcome to clone, explore, and reuse it for educational purposes.
 - However, to keep the repository clean and focused:
     - ❌ Please do not fork, submit pull requests, or open issues.  
       If you have feedback or questions, feel free to reach out via LinkedIn or email.
