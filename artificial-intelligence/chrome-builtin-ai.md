@@ -81,5 +81,5 @@ Below are steps to enable and test Chrome Built-in APIs:
 - **AI Right in the Browser with Chrome’s Built-in AI APIs** - Presentation by [Thomas Steiner](https://www.linkedin.com/in/thomassteinerlinkedin/) at JSNation, June 2025. 
   - [Google docs presentation](https://docs.google.com/presentation/d/1E1d8yOi0tsRQ8n5rVXOfBNl6X74GvzgldJXyycoHpHE/edit?slide=id.g35d8303de8b_1_4#slide=id.g35d8303de8b_1_4)
   - [Project demo](https://tomayac.github.io/prompt-api-sqlite/)
-- **Practical Web AI: Built-In, Browser Based, Brilliant** - Presentation by [Phil Nash](https://www.linkedin.com/in/philnash/) during JSNation, June 2025. 
+- **Practical Web AI: Built-In, Browser Based, Brilliant** - Presentation by [Phil Nash](https://www.linkedin.com/in/philnash/) at JSNation, June 2025. 
 
