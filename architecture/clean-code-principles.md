@@ -5,6 +5,7 @@
 - Key principles include **using meaningful names**, **writing small functions**, **avoiding duplication**, **eliminating side effects**, and **keeping code expressive**.
 
 ## Detailed Breakdown of Clean Code Principles
+
 ### 1. Meaningful Names
 - Use descriptive and unambiguous names for variables, functions, and classes that clearly indicate their purpose.
 - Avoid single-letter names or cryptic abbreviations.
@@ -25,7 +26,7 @@
 - Functions should ideally have no side effects, meaning they should only perform the task they are intended for without altering external state.
 - Avoid methods that both change object state and return values: use separate methods for each.
 
-### 6. Keep Code Expressive:
+### 5. Keep Code Expressive:
 - Write code that explains itself, minimizing the need for comments.
 - Use comments to explain complex logic or clarify intent, but avoid obvious or redundant comments.
 - Remove commented-out code - it's better to refactor or delete it.
@@ -43,7 +44,14 @@
 - Each module/class/function should have a single responsibility.
 - This promotes reusability, encapsulation, and easier maintenance.
 
-### 9. Testability:
+### 9. Error Handling
+- Handle errors gracefully and predictably.
+- Use exceptions intentionally and avoid silent failures.
+- Avoid returning `null` or `undefined` - instead, return meaningful fallback values (e.g., empty arrays, zero, or default objects).
+- Check for fallback values and log errors appropriately; provide clear, user-friendly messages in the UI.
+- Implement error boundaries to prevent the entire app from crashing when a child component encounters an error.
+
+### 10. Testability:
 - Write code that is easy to test, with clear separation of concerns.
 - Use unit tests to verify the behavior of individual components.
 
