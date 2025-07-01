@@ -15,7 +15,8 @@
 - [Codebase Build and Management Tools](#codebase-build-and-management-tools)
 - [High-Quality React GitHub Repositories (2025)](#high-quality-react-github-repositories-2025)
 - [Documentation and References](#documentation-and-references)
-  
+
+ 
 ## Best Practices for Building Scalable, Maintainable and Testable React Code
 - Use **TypeScript** for strong type checking and better developer experience.
 - Split components by responsibility to **keep code modular** and easier to manage.
@@ -30,6 +31,7 @@
 - Consider general [**front-end security attacks**](https://www.geeksforgeeks.org/blogs/top-common-frontend-security-attacks/) and [**performance best practices**](https://www.geeksforgeeks.org/blogs/best-practices-for-enhancing-application-performance/) when building React applications.   
 
 This documentation contains summaries and trade-offs of various tools and architectural patterns for React applications, based on real learning, official documentation and community best practices.
+
 
 ## React Build Tools and Frameworks
 There are several ways to build a project with React:
@@ -425,6 +427,7 @@ Example:
 | Factory Methods                        | ⚠️ Advanced        | ✅ Sometimes        | Seen in domain modeling or service instantiation scenarios                          |
 | Inversion of Control (IoC)             | ⚠️ Advanced        | ✅ Sometimes        | Tied to DI; aligns with modern scalable architecture practices                      |
 
+
 ## State Management
 ### [React Redux Library](https://react-redux.js.org/introduction/getting-started)
 The official React UI bindings layer for [Redux](https://redux.js.org/tutorials/essentials/part-1-overview-concepts). It lets your React components read data from a Redux store, and dispatch actions to the store to update state.
@@ -576,6 +579,7 @@ Server can specify validation rules, client can retrieve them when receiving dat
 - **Warning State** different from Error State 
 - **Related Fields Validation**
 
+
 ## Data Fetching and API Manipulation
 ### [Drizzle](https://www.linkedin.com/advice/3/how-can-you-effectively-use-drizzle-manage-state-your#:~:text=Drizzle%20is%20a%20collection%20of,transactions%2C%20and%20generating%20contract%20events.)
   - **Drizzle** is a **collection of libraries and tools** that simplify the development of dApps using React. 
@@ -667,6 +671,7 @@ export default MyComponent;
 | [**Stitches**](https://stitches.dev/docs/installation)                             | Compile-time CSS (no runtime injection), great TS support, fast & modern API                               | Smaller ecosystem, slight learning curve for variants/theming            | Growing            | Actively maintained |
 | [**Vanilla Extract**](https://vanilla-extract.style/documentation/getting-started) | Fully type-safe, build-time CSS generation, excellent for monorepos                                        | Requires custom build setup, not as beginner-friendly                    | Niche/TS-heavy     | Actively maintained |
 
+
 ## Linting
 ### [React Official Editor Setup Documentation](https://react.dev/learn/editor-setup#linting)
 ### [Rules of React](https://react.dev/reference/rules)
@@ -691,6 +696,7 @@ export default MyComponent;
 ### [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 **React Testing Library** builds on top of DOM Testing Library by adding APIs for working with React components.
 
+
 ## Localization & Translation
 | Tool                                                             | Description                                                             |
 |------------------------------------------------------------------| ----------------------------------------------------------------------- |
@@ -704,6 +710,7 @@ export default MyComponent;
 A powerful, open source, technology-agnostic build platform designed to efficiently manage codebases of any scale.
 ### [Turborepo](https://turborepo.com/docs)
 A high-performance build system for `JavaScript` and `TypeScript` codebases. It is designed for scaling monorepos and also makes workflows in [single-package workspaces](https://turborepo.com/docs/guides/single-package-workspaces) faster, too.
+
 
 ## High-Quality React GitHub Repositories (2025)
 
