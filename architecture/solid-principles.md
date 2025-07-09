@@ -259,7 +259,32 @@ Problems in this approach:
    console.log(shape.getArea()); // ❌ Expected 24 (4×6), got 36
    ```
 
-### ✅ To avoid LSP violations, we can favor composition over inheritance
+### ✅ Valid Example: Use interfaces for polymorphism
+Instead of inheritance, define a contract with an interface.
+
+Benefits of this approach:
+- Promotes polymorphism and maintains ***Liskov Substitution Principle (LSP).***
+- Each class implements its own logic while respecting the shared contract.
+
+```ts
+interface Shape {
+  draw(): void;
+}
+
+class Circle implements Shape {
+  draw() {
+    console.log('Drawing a circle');
+  }
+}
+
+class Rectangle implements Shape {
+  draw() {
+    console.log('Drawing a rectangle');
+  }
+}
+```
+
+### ✅ Valid Example: Favor composition over inheritance
 In object-oriented programming, both inheritance and composition are used to create relationships between classes, but they achieve this in different ways.    
 - **Inheritance** models an **"is-a"** relationship, where a new class (subclass) inherits properties and behaviors from an existing class (superclass).    
 - **Composition**, on the other hand, models a **"has-a"** relationship, where a class contains instances of other classes as members.
@@ -285,7 +310,7 @@ In this example:
    }
    ```
 
-### ✅ Another Example of Composition
+### ✅ Valid Example: Another example of composition
 In this example:   
 - `Car` has an `Engine` (composition)
 - `Engine` is provided to `Car` (dependency injection)
@@ -307,31 +332,6 @@ class Car {
 // Elsewhere, composing objects and injecting dependencies
 const engine = new Engine();
 const car = new Car(engine); // DI and Composition happen here
-```
-
-### ✅ Use Interfaces for Polymorphism
-Instead of inheritance, define a contract with an interface.
-
-Benefits of this approach:  
-- Promotes polymorphism and maintains ***Liskov Substitution Principle (LSP).***
-- Each class implements its own logic while respecting the shared contract.
-
-```ts
-interface Shape {
-  draw(): void;
-}
-
-class Circle implements Shape {
-  draw() {
-    console.log('Drawing a circle');
-  }
-}
-
-class Rectangle implements Shape {
-  draw() {
-    console.log('Drawing a rectangle');
-  }
-}
 ```
 
 ### ✅ Valid Example: Polymorphism with logging
