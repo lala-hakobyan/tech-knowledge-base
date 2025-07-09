@@ -103,7 +103,7 @@ class Car {
 
 ## 2. Open/Closed Principle (OCP)
 Software entities (`classes`, `modules`, `functions`, etc.) should be open for extension but closed for modification. This means you should be able to add new functionality without altering existing code.
-This can be achieved through **polymorphism** and **abstraction**.
+This can be achieved through [**polymorphism**](/oop/principles-oop.md#polymorphism) and [**abstraction**](/oop/principles-oop.md#abstraction).
 
 Let's explore the **Open/Closed Principle (OCP)** with examples.    
 Suppose we have a system that calculates discounts for different types of users (e.g., regular users, premium users, and new users).
