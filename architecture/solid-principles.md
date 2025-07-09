@@ -6,8 +6,8 @@ These principles were introduced by **Robert C. Martin** in his 2000 paper, *"De
 The five **SOLID principles** are:
 1. [**[S] - Single Responsibility (SRP)**](#1-single-responsibility-principle-srp)
 2. [**[O] - Open/Closed Principle (OCP)**](#2-openclosed-principle-ocp)
-3. [**[L] - Liskov Substitution Principle (LSP)**](#3-l---liskov-substitution-principle-lsp)
-4. [**[I] - Interface Segregation Principle (ISP)**](#4-i---interface-segregation-principle-isp)
+3. [**[L] - Liskov Substitution Principle (LSP)**](#3-liskov-substitution-principle-lsp)
+4. [**[I] - Interface Segregation Principle (ISP)**](#4-interface-segregation-principle-isp)
 5. [**[D] - Dependency Inversion Principle (DIP)**](#5-dependency-inversion-principle-dip)
 
 ## 1. Single Responsibility Principle (SRP)
@@ -213,7 +213,7 @@ We can spot two **OOP principles** here:
     - It doesn't contain any actual logic - just a method signature: `getDiscount()`: number.
     - This allows you to build multiple interchangeable implementations that follow this contract.
 
-## 3. [L] - Liskov Substitution Principle (LSP)
+## 3. Liskov Substitution Principle (LSP)
 Subtypes must be substitutable for their base types without altering the correctness of the program. 
 - Essentially, derived classes should be usable in place of their base classes without causing issues.   
 - This principle ensures that subclasses don’t break the contracts or expected behavior of their base classes.
@@ -364,7 +364,7 @@ class Rectangle implements Shape {
 - Use inheritance only for true **“is-a”** relationships.
 - Otherwise, prefer **composition** and **interfaces**.
 
-## 4. [I] - Interface Segregation Principle (ISP)
+## 4. Interface Segregation Principle (ISP)
 Clients should not be forced to depend on interfaces they do not use. This means you should create smaller, more focused interfaces rather than large, all-encompassing ones.
 
 Let's explore **Interface Segregation Principle (ISP)** by examples:
