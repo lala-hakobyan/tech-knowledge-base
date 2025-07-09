@@ -22,6 +22,7 @@
 - Split components by responsibility to **keep code modular** and easier to manage.
 - Use **consistent and meaningful folder structure** (e.g., feature-based or domain-driven) and follow naming conventions.
 - **Optimize rendering** with memoization (`React.memo`, `useMemo`, `useCallback`) where appropriate or use new [React Compiler](./compiler-react.md) to do optimizations automatically.
+- Use **lazy loading** of features and resources(images, videos, etc.) to achieve better performance.
 - Follow **React design patterns**, since React is an unopinionated library and without patterns, code can become messy.
 - Integrate **linting plugins** to enforce [Rules of React](https://react.dev/reference/rules), accessibility rules and consistent code style.
 - Include **unit and component testing** to ensure reliability and catch regressions early.
@@ -76,13 +77,13 @@ Very well-structured APIs with excellent TypeScript support - all types are buil
 
 ### React-Compatible Tools: Ecosystem & Usage Overview (2025)
 
-| Tool                                                                       | Init Command                                  | Status              | Popularity        | When to Use                                                | Notes                                                                        |
-|----------------------------------------------------------------------------|-----------------------------------------------|---------------------|-------------------|------------------------------------------------------------|--------------------------------------------------------------------------------|
-| [**Vite**](https://vite.dev/guide/)                                        | `npm create vite@latest`                      | Stable & mature     | Very popular      | Small to medium apps, custom setups, fast dev environments | Lightning-fast HMR, opinionated, needs routing/SSR added manually              |
-| [**Create React App**](https://create-react-app.dev/docs/getting-started/) | `npx create-react-app my-app`                 | Deprecated          | -                 | -                                                          | Once was the officially supported way to create single-page React applications. |
-| [**Next.js**](https://nextjs.org/docs)                                     | `npx create-next-app@latest`                  | Enterprise-ready    | Extremely popular | Large-scale apps, SSR, SEO, hybrid rendering               | Official React recommendation, Server Components, Routing, API routes included |
-| [**Remix**](https://remix.run/docs/en/main/start/quickstart)               | `npx create-remix@latest`                     | Actively maintained | Moderate, growing | Apps with deep routing & data loading (e.g. forms, actions) | Built on web fundamentals, owned by Shopify, smaller but loyal community       |
-| [**Hono**](https://hono.dev/docs/)                                         | `npm create hono@latest`                      | New & fast-growing  | Rising rapidly    | Lightweight APIs or edge-native apps with React or JSX     | Tiny, optimized for edge/serverless, integrates with React manually            |
+| Tool                         | Init Command                                  | Status              | Popularity        | When to Use                                                  | Notes                                                                            |
+|------------------------------|-----------------------------------------------|---------------------|-------------------|--------------------------------------------------------------|----------------------------------------------------------------------------------|
+| [**Vite**](https://vite.dev/guide/)              | `npm create vite@latest`                      | Stable & mature     | Very popular      | Small to medium apps, custom setups, fast dev environments   | Lightning-fast HMR, opinionated, needs routing/SSR added manually                |
+| [**Create React App**](https://create-react-app.dev/docs/getting-started/)  | `npx create-react-app my-app`                 | Deprecated          | -                 | -                                                            | Once was the officially supported way to create single-page React applications.  |
+| [**Next.js**](https://nextjs.org/docs)           | `npx create-next-app@latest`                  | Enterprise-ready    | Extremely popular | Large-scale apps, SSR, SEO, hybrid rendering                 | Official React recommendation, Server Components, Routing, API routes included   |
+| [**Remix**](https://remix.run/docs/en/main/start/quickstart)             | `npx create-remix@latest`                     | Actively maintained | Moderate, growing | Apps with deep routing & data loading (e.g. forms, actions)  | Built on web fundamentals, owned by Shopify, smaller but loyal community         |
+| [**Hono**](https://hono.dev/docs/)              | `npm create hono@latest`                      | New & fast-growing  | Rising rapidly    | Lightweight APIs or edge-native apps with React or JSX       | Tiny, optimized for edge/serverless, integrates with React manually              |
 
 
 ## Project Structure and Naming Conventions
@@ -411,21 +412,21 @@ Example:
   | **Inversion of Control (IoC)**     | The component depends on an external context to provide dependencies.          |
 
 ### Summary of Design Patterns
-| Pattern                                | Popularity         | Real-World Usage    | Notes                                                                               |
-|----------------------------------------|--------------------|---------------------|-------------------------------------------------------------------------------------|
-| Layout Components                      | ✅ Common          | ✅ Yes              | Used for composing flexible layouts (SplitView, SidebarLayout, etc.)                |
-| Container-Presentational Pattern       | ✅ Classic         | ✅ Yes              | Still relevant, though custom hooks now often replace containers                    |
-| Controlled vs Uncontrolled Components  | ✅ Core Concept    | ✅ Yes              | Controlled preferred for testability; uncontrolled used for simpler or native forms |
-| Higher Order Components (HOC)          | ⚠️ Declining       | ⚠️ Limited          | Replaced by hooks in most new code; still seen in some libraries (e.g. `connect`)   |
-| Custom Hooks                           | ✅ Very Popular    | ✅ Yes              | Go-to pattern for logic reuse in modern React                                       |
-| Functional Programming Patterns        | ✅ Core Design     | ✅ Yes              | Encouraged by React team; clean, reusable, and testable code                        |
-| Recursive Components                   | ⚠️ Niche           | ✅ Sometimes        | Used when rendering nested tree-like structures (e.g. menus, comments, folders)     |
-| Component Composition                  | ✅ Fundamental     | ✅ Yes              | The key to React’s philosophy - "Composition over Inheritance"                      |
-| Partial Application (Components)       | ⚠️ Advanced        | ✅ Sometimes        | Useful for pre-configuring component props in complex UIs                           |
-| Business Logic Encapsulation           | ✅ Best Practice   | ✅ Yes              | Critical for separating concerns and enabling testing and scalability               |
-| Dependency Injection (via Context)     | ✅ Common          | ✅ Yes              | Widely used to inject services or data (e.g., theme, auth, cart state)              |
-| Factory Methods                        | ⚠️ Advanced        | ✅ Sometimes        | Seen in domain modeling or service instantiation scenarios                          |
-| Inversion of Control (IoC)             | ⚠️ Advanced        | ✅ Sometimes        | Tied to DI; aligns with modern scalable architecture practices                      |
+| Pattern                                | Popularity         | Notes                                                                                |
+|----------------------------------------|--------------------|--------------------------------------------------------------------------------------|
+| Layout Components                      | ✅ Common          | Used for composing flexible layouts (SplitView, SidebarLayout, etc.)                 |
+| Container-Presentational Pattern       | ✅ Classic         | Still relevant, though custom hooks now often replace containers                     |
+| Controlled vs Uncontrolled Components  | ✅ Core Concept    | Controlled preferred for testability; uncontrolled used for simpler or native forms  |
+| Higher Order Components (HOC)          | ⚠️ Declining       | Replaced by hooks in most new code; still seen in some libraries (e.g. `connect`)    |
+| Custom Hooks                           | ✅ Very Popular    | Go-to pattern for logic reuse in modern React                                        |
+| Functional Programming Patterns        | ✅ Core Design     | Encouraged by React team; clean, reusable, and testable code                         |
+| Recursive Components                   | ⚠️ Niche           | Used when rendering nested tree-like structures (e.g. menus, comments, folders)      |
+| Component Composition                  | ✅ Fundamental     | The key to React’s philosophy - "Composition over Inheritance"                       |
+| Partial Application (Components)       | ⚠️ Advanced        | Useful for pre-configuring component props in complex UIs                            |
+| Business Logic Encapsulation           | ✅ Best Practice   | Critical for separating concerns and enabling testing and scalability                |
+| Dependency Injection (via Context)     | ✅ Common          | Widely used to inject services or data (e.g., theme, auth, cart state)               |
+| Factory Methods                        | ⚠️ Advanced        | Seen in domain modeling or service instantiation scenarios                           |
+| Inversion of Control (IoC)             | ⚠️ Advanced        | Tied to DI; aligns with modern scalable architecture practices                       |
 
 
 ## State Management
