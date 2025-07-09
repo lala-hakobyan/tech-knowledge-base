@@ -258,31 +258,6 @@ Problems in this approach:
    
    console.log(shape.getArea()); // ❌ Expected 24 (4×6), got 36
    ```
-  
-### ✅ Valid Example: Polymorphism with logging
-In this example: 
-- The `draw()` method still performs its expected purpose.  
-- This is safe polymorphism: `Circle` can be used where `Shape` is expected.  
-- Logging is allowed and does not violate **Liskov Substitution Principle (LSP).**  
-
-   ```ts
-   class Shape {
-     draw(): void {
-       console.log('Drawing a shape...');
-     }
-   }
-   
-   class Circle extends Shape {
-     draw(): void {
-       console.log('Logging: Drawing a circle');
-       // Still fulfills the draw contract
-       super.draw();
-     }
-   }
-   
-   const shape: Shape = new Circle();
-   shape.draw(); // Outputs: Logging: Drawing a circle
-   ```
 
 ### ✅ To avoid LSP violations, we can favor composition over inheritance
 In object-oriented programming, both inheritance and composition are used to create relationships between classes, but they achieve this in different ways.    
@@ -359,6 +334,31 @@ class Rectangle implements Shape {
 }
 ```
 
+### ✅ Valid Example: Polymorphism with logging
+In this example:
+- The `draw()` method still performs its expected purpose.
+- This is safe polymorphism: `Circle` can be used where `Shape` is expected.
+- Logging is allowed and does not violate **Liskov Substitution Principle (LSP).**
+
+   ```ts
+   class Shape {
+     draw(): void {
+       console.log('Drawing a shape...');
+     }
+   }
+   
+   class Circle extends Shape {
+     draw(): void {
+       console.log('Logging: Drawing a circle');
+       // Still fulfills the draw contract
+       super.draw();
+     }
+   }
+   
+   const shape: Shape = new Circle();
+   shape.draw(); // Outputs: Logging: Drawing a circle
+   ```
+  
 ### Summary of **Liskov Substitution Principle (LSP)** Rule in Practice:
 - Don’t inherit just to reuse code.
 - Use inheritance only for true **“is-a”** relationships.
