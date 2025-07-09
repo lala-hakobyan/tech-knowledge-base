@@ -528,7 +528,7 @@ While the **SOLID principles** collectively help create maintainable, testable, 
 [**Robert C. Martin**](https://www.linkedin.com/in/robert-martin-7395b0/) also known as **"Uncle Bob,"** is a prominent figure in software development, particularly known for his work on Agile methodologies and the **SOLID principles** of object-oriented design.
 These principles were introduced by **Robert C. Martin** in his 2000 paper, [**"Design Principles and Design Patterns"**](https://objectmentor.com/resources/articles/Principles_and_Patterns.pdf)
 
-Below are some Trusted Resources on **SOLID Principles** including **Robert C. Martin's books**:
+### Trusted resources on **SOLID Principles** including **Robert C. Martin's books**:
 
 | Resource Title                                                                          | Type     | What You’ll Learn                                                                                   | Link                                                                                                     |
 |-----------------------------------------------------------------------------------------|----------|-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
@@ -536,3 +536,8 @@ Below are some Trusted Resources on **SOLID Principles** including **Robert C. M
 | **Agile Software Development: Principles, Patterns, and Practices** by Robert C. Martin | Book     | Original source of SOLID principles, packed with code-level insights and exercises.                 | [Link](https://www.amazon.com/Agile-Software-Development-Principles-Patterns/dp/0135974445)              |
 | **SOLID Principles in JavaScript** by Max Stoiber (freeCodeCamp)                        | Article  | A simple article that translates the core ideas of SOLID into JavaScript code examples.             | [Link](https://www.freecodecamp.org/news/solid-principles-explained-in-plain-english/)                   |
 | **SOLID Principles in Programming: Understand With Real Life Examples** (GeeksForGeeks) | Article  | Detailed but beginner-friendly explanation of each principle with C++ examples.                     | [Link](https://www.geeksforgeeks.org/solid-principles-in-java/)                                          |
+
+### Additional helper resources about **OOP**, **Clean Architecture** and **Clean Code Principles**
+- [OOP Principles](./../oop/principles-oop.md)
+- [Clean Code Principles](./clean-code-principles.md)
+- [Clean Architecture](./clean-architecture.md)
