@@ -182,7 +182,7 @@ console.log(discount); // 0.3
 ```
 
 We can spot two **OOP principles** here:
-- **Polymorphism**   
+- [**Polymorphism**](/oop/principles-oop.md#polymorphism)   
   In our example, this is polymorphism:
 
    ```ts
@@ -199,7 +199,7 @@ We can spot two **OOP principles** here:
   
   That is **polymorphism in action** - even though we used interfaces, not class inheritance. <br><br>
 
-- **Abstraction**   
+- [**Abstraction**](/oop/principles-oop.md#abstraction)   
   In our example, this part is the abstraction:
 
   ```ts
@@ -259,31 +259,6 @@ Problems in this approach:
    console.log(shape.getArea()); // ❌ Expected 24 (4×6), got 36
    ```
 
-### ✅ Valid Example: Use interfaces for polymorphism
-Instead of inheritance, define a contract with an interface.
-
-Benefits of this approach:
-- Promotes polymorphism and maintains ***Liskov Substitution Principle (LSP).***
-- Each class implements its own logic while respecting the shared contract.
-
-```ts
-interface Shape {
-  draw(): void;
-}
-
-class Circle implements Shape {
-  draw() {
-    console.log('Drawing a circle');
-  }
-}
-
-class Rectangle implements Shape {
-  draw() {
-    console.log('Drawing a rectangle');
-  }
-}
-```
-
 ### ✅ Valid Example: Favor composition over inheritance
 In object-oriented programming, both inheritance and composition are used to create relationships between classes, but they achieve this in different ways.    
 - **Inheritance** models an **"is-a"** relationship, where a new class (subclass) inherits properties and behaviors from an existing class (superclass).    
@@ -332,6 +307,31 @@ class Car {
 // Elsewhere, composing objects and injecting dependencies
 const engine = new Engine();
 const car = new Car(engine); // DI and Composition happen here
+```
+
+### ✅ Valid Example: Use interfaces for polymorphism
+Instead of inheritance, define a contract with an interface.
+
+Benefits of this approach:
+- Promotes polymorphism and maintains ***Liskov Substitution Principle (LSP).***
+- Each class implements its own logic while respecting the shared contract.
+
+```ts
+interface Shape {
+  draw(): void;
+}
+
+class Circle implements Shape {
+  draw() {
+    console.log('Drawing a circle');
+  }
+}
+
+class Rectangle implements Shape {
+  draw() {
+    console.log('Drawing a rectangle');
+  }
+}
 ```
 
 ### ✅ Valid Example: Polymorphism with logging
