@@ -356,7 +356,7 @@ Module Federation has three main concepts:
 3. **Load Remote Component in Shell (Runtime)**   
     Depending on the technology (`Angular`, `React`, etc.), the Shell app loads the remote component during runtime. In Angular, this is typically done when the corresponding lazy-loaded route is accessed.  
     
-    **Example in Angular:** Load Angular Remote Component in `app.routes.ts` as the `user-card` route is reached
+    **Example in Angular:** Load Angular Remote Component in `app.routes.ts` as the `user-card` route is reached.
     ```ts
     export const routes: Routes = [
         {
@@ -371,7 +371,7 @@ Module Federation has three main concepts:
     ];
     ```
 
-    **Example in Angular (if not web component):** Load Angular Remote Component in app component and convert it to the Angular component
+    **Example in Angular (if not web component):** Load Angular Remote Component in app component and convert it to the Angular component.
     ```ts
     // app.component.ts
     
