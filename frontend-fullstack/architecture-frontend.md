@@ -75,16 +75,16 @@ These patterns are concerned with **how classes and objects are composed and org
 
 - **Facade Pattern**
     - Provides a simplified interface to a larger, more complex subsystem, making it easier to use.
-    - **Use Cases:** Wrapping complex third-party libraries or internal systems with a clean, easy-to-use API.<br><br>  
+    - **Use Cases:** Wrapping complex third-party libraries or internal systems with a clean, easy-to-use API.<br>  
 
 - **Adapter Pattern**
     - Allows the interface of an existing class to be used as another interface, enabling incompatible interfaces to work together.
-    - **Use Cases:** Integrating legacy systems with new applications, reusing existing code, or making different libraries/frameworks compatible.<br><br>  
+    - **Use Cases:** Integrating legacy systems with new applications, reusing existing code, or making different libraries/frameworks compatible.<br>  
 
 - **Dependency Injection (DI) Pattern**
     - A pattern where a component receives its dependencies from an external source rather than creating them itself, promoting Inversion of Control and decoupling.
     - While not originally part of the GoF catalog, DI is a widely adopted structural pattern in frontend frameworks
-    - **Use Cases:** Essential for creating modular, testable, and maintainable code in large applications. Heavily integrated into frameworks like Angular.<br><br>  
+    - **Use Cases:** Essential for creating modular, testable, and maintainable code in large applications. Heavily integrated into frameworks like Angular.<br>  
 
 - **Strategy Pattern**
     - Involves defining a group of different algorithms and making it possible to choose and switch between them as needed while a program is running.
