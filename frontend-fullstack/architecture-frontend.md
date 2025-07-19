@@ -75,7 +75,7 @@ These patterns are concerned with **how classes and objects are composed and org
 
 - **Facade Pattern**
     - Provides a simplified interface to a larger, more complex subsystem, making it easier to use.
-    - **Use Cases:** Wrapping complex third-party libraries or internal systems with a clean, easy-to-use API.<br>  
+    - **Use Cases:** Wrapping complex third-party libraries or internal systems with a clean, easy-to-use API.    
 
 - **Adapter Pattern**
     - Allows the interface of an existing class to be used as another interface, enabling incompatible interfaces to work together.
@@ -84,7 +84,7 @@ These patterns are concerned with **how classes and objects are composed and org
 - **Dependency Injection (DI) Pattern**
     - A pattern where a component receives its dependencies from an external source rather than creating them itself, promoting Inversion of Control and decoupling.
     - While not originally part of the GoF catalog, DI is a widely adopted structural pattern in frontend frameworks
-    - **Use Cases:** Essential for creating modular, testable, and maintainable code in large applications. Heavily integrated into frameworks like Angular.<br>  
+    - **Use Cases:** Essential for creating modular, testable, and maintainable code in large applications. Heavily integrated into frameworks like Angular.    
 
 - **Strategy Pattern**
     - Involves defining a group of different algorithms and making it possible to choose and switch between them as needed while a program is running.
@@ -95,11 +95,11 @@ These patterns are concerned with **algorithms and the assignment of responsibil
 
 - **Observer Pattern**
    - Defines a one-to-many dependency between objects so that when one object (the "subject") changes state, all its dependents (the "observers") are notified and updated automatically.
-   - **Use Cases:** Event-driven systems, state management, and scenarios where changes in one part of the application need to trigger updates in other, independent parts.<br>  
+   - **Use Cases:** Event-driven systems, state management, and scenarios where changes in one part of the application need to trigger updates in other, independent parts.   
 
 - **Publisher/Subscriber Pattern (Pub/Sub)**
    - Similar to Observer but with a clearer separation. Publishers send messages to a "channel" or "topic" without knowing which subscribers will receive them. Subscribers listen to specific channels.
-   - **Use Cases:** Decoupled communication between components, especially in larger applications or when integrating with external services.
+   - **Use Cases:** Decoupled communication between components, especially in larger applications or when integrating with external services.  
 
 ### UI Design Patterns
 These patterns focus on effective ways to structure and manage individual UI components, promoting reusability, testability, and clear separation of concerns at the component level.
@@ -117,13 +117,13 @@ Choosing the correct rendering model(**CSR**, **SSR**, **SSG**) based on your pr
 
 The following frontend rendering models are available today:
 - **Client-Side Rendering (CSR)**  
-  Means the browser renders HTML from JavaScript after downloading it.<br>
+  Means the browser renders HTML from JavaScript after downloading it.  
 
 - **Server-Side rendering (SSR)**  
-  The server generates the HTML for the page, which is then sent to the browser to render.<br>
+  The server generates the HTML for the page, which is then sent to the browser to render.  
 
 - **Static Site Generation (SSG)**  
-  Pages are pre-built at build time and served as static files.<br>
+  Pages are pre-built at build time and served as static files.  
 
 - **Partial/Incremental Hydration**  
 This is an optimization technique used with SSR or SSG, where only specific, interactive parts of the pre-rendered HTML are **"hydrated"** with client-side JavaScript, rather than the entire page. 
@@ -166,26 +166,26 @@ High-level front-end architecture patterns answer questions like:
 1. **Monolithic Architecture**
    - In a monolithic architecture, the entire frontend is built as a **single, self-contained unit**.
    - This approach can be simple for smaller applications but becomes **challenging to manage and scale** as the application grows.
-   - Code is often **tightly coupled**, which can make it difficult to isolate changes or introduce new features without affecting other parts of the application. This tight coupling often extends to the backend, with both frontend and backend frequently residing in the same repository.  
+   - Code is often **tightly coupled**, which can make it difficult to isolate changes or introduce new features without affecting other parts of the application. This tight coupling often extends to the backend, with both frontend and backend frequently residing in the same repository.    
 
 2. **Modular Architecture**
    - Modular architecture involves breaking down the frontend into **independent modules** or sections.
    - Each module can be **developed and maintained separately**, promoting better organization and code reuse.
-   - This approach can be more scalable and maintainable than monolithic architectures.  
-<br>
+   - This approach can be more scalable and maintainable than monolithic architectures.    
+
 3. **Component-Based Architecture**
    - Component-based architecture focuses on building the frontend from **reusable UI components**.
    - Components **encapsulate their own logic and rendering**, making them **independent** and **easy to integrate** into different parts of the application.
-   - Popular frameworks like **React**, **Angular**, and **Vue.js** are well-suited for component-based development.  
-<br>
+   - Popular frameworks like **React**, **Angular**, and **Vue.js** are well-suited for component-based development.    
+
 4. **Micro-frontend Architecture**
    - Micro-frontends extend the **concept of microservices to the frontend**, breaking it down into **independent**, **smaller** applications that can be **developed and deployed separately**.
    - In micro-frontend architecture, we typically have a hosting app (also called the **shell**) and multiple **MFE** (**micro-frontend**) apps.
    - Each micro-frontend can be built using different technologies and teams, enabling greater **flexibility** and **agility**.
    - This approach is suitable for **large**, **complex** applications with **diverse teams and technologies**.
-   - In pure micro-frontend architecture, **rendering** of micro-frontends is typically handled at **runtime in the browser**. This means that once the setup is done, the shell (host) app does not need to be redeployed when a new version of any micro-frontend is deployed.  
-<br>
-6. **Hybrid/Mixed Architecture**
+   - In pure micro-frontend architecture, **rendering** of micro-frontends is typically handled at **runtime in the browser**. This means that once the setup is done, the shell (host) app does not need to be redeployed when a new version of any micro-frontend is deployed.    
+
+5. **Hybrid/Mixed Architecture**
    - This approach **combines** elements from **two or more distinct architectural patterns** to leverage their individual strengths and mitigate their weaknesses for specific parts of an application.
    - For example, a **large application** might use a **micro-frontend architecture** for its core modules, but a **highly interactive dashboard section** within one of those micro-frontends might heavily employ a **component-based architecture** with **sophisticated state management**.
    - Another common hybrid might involve a foundational **monolithic structure** for stable, rarely changing parts, combined with a **modular design for more dynamic sections**, or even a gradual transition from monolithic to micro-frontends.
@@ -207,16 +207,16 @@ These patterns answer questions like:
         - **View:** Responsible for displaying the data to the user (the UI).
         - **Controller:** Handles user input, updates the Model, and selects the View.
     - **Use Cases**  
-      A classic pattern widely used in many frameworks, particularly for traditional server-rendered applications or as a foundational concept in early client-side frameworks like **AngularJS**.  
-<br>
+      A classic pattern widely used in many frameworks, particularly for traditional server-rendered applications or as a foundational concept in early client-side frameworks like **AngularJS**.    
+
 2. **MVVM (Model-View-ViewModel)**
     - A variant of MVC that emphasizes the separation of concerns, particularly for UI development.
         - **Model:** Same as MVC, represents data and business logic.
         - **View:** The actual UI elements, purely presentational.
         - **ViewModel:** An abstraction of the View that exposes data and commands, handling the View's display logic and acting as an intermediary between the View and the Model. It often uses data binding to synchronize View and ViewModel.
     - **Use Cases**  
-      Core to frameworks with strong data binding like **Angular** and **Vue.js**, used when complex data binding and UI logic are involved.  
-<br>
+      Core to frameworks with strong data binding like **Angular** and **Vue.js**, used when complex data binding and UI logic are involved.   
+
 3. **Flux Architecture**
     - Introduced by **Facebook (Meta)** for managing application state in **complex component-based applications**. It enforces a unidirectional data flow with four main components:
         - **Actions:** Payloads of data sent to the Dispatcher.
@@ -224,29 +224,29 @@ These patterns answer questions like:
         - **Stores:** Hold the application's state and logic for a particular domain.
         - **Views:** Presentable UI, usually React components, that retrieve data from stores and dispatch actions.
     - **Use Cases**  
-      Ideal for applications with complex state management, aiming for predictable updates and easier debugging (e.g., **Redux** is built on Flux principles).
+      Ideal for applications with complex state management, aiming for predictable updates and easier debugging (e.g., **Redux** is built on Flux principles).  
 
 
 ### Frontend Application Types
 In addition to common architecture patterns, front-end applications can also be classified by their **runtime behavior** and **delivery approach**:
 
 - **Single Page Applications (SPAs)**    
-The entire application is loaded in a **single HTML page** and **updates dynamically** in the browser **without full page reloads**, often using client-side rendering.  
-<br>  
+The entire application is loaded in a **single HTML page** and **updates dynamically** in the browser **without full page reloads**, often using client-side rendering.    
+
 - **Server-Side Rendered (SSR) Applications**  
-The initial HTML for each page is **generated on the server for every request**. This provides **fast initial load times** and **good SEO**, with the client-side JavaScript then taking over to make the page interactive (**hydration**).  
-<br>  
+The initial HTML for each page is **generated on the server for every request**. This provides **fast initial load times** and **good SEO**, with the client-side JavaScript then taking over to make the page interactive (**hydration**).   
+  
 - **Isomorphic (Universal) Applications**  
-These are applications that **render on both the server and client**. This combines the benefits of **SSR** (fast initial load, SEO) with **client-side interactivity**, allowing the same codebase to run in both environments.  
-<br>
+These are applications that **render on both the server and client**. This combines the benefits of **SSR** (fast initial load, SEO) with **client-side interactivity**, allowing the same codebase to run in both environments.    
+
 - **Static Site Applications**  
-Built and served as **static HTML/CSS/JS** files. These are pre-rendered at build time, resulting in **extremely fast load times and easy hosting**. They are **less dynamic** unless paired with client-side JavaScript or APIs.  
-<br>
+Built and served as **static HTML/CSS/JS** files. These are pre-rendered at build time, resulting in **extremely fast load times and easy hosting**. They are **less dynamic** unless paired with client-side JavaScript or APIs.    
+
 - **Jamstack Applications**  
 A modern approach using **pre-rendered pages** (via **Static Site Generators** or **SSG**), **headless APIs for dynamic data**, and **CDNs for fast global delivery**. It combines the **speed and security** of static sites with **dynamic functionality** via client-side JavaScript and serverless functions.  
-<br>
+
 - **Partial Server-Side Rendering (e.g., Server Components/Islands Architecture)**  
-Only specific, dynamic parts of a page are rendered on the server, while other parts remain static or client-side rendered. This allows for fine-grained control over what gets rendered on the server, **improving performance** and **reducing JavaScript bundle sizes** by sending only necessary client-side code. Often referred to as **"Server Components"** (e.g., React Server Components) or **"Islands Architecture."**  
+Only specific, dynamic parts of a page are rendered on the server, while other parts remain static or client-side rendered. This allows for fine-grained control over what gets rendered on the server, **improving performance** and **reducing JavaScript bundle sizes** by sending only necessary client-side code. Often referred to as **"Server Components"** (e.g., React Server Components) or **"Islands Architecture."**    
 
 
 ### Frontend Repository Structures
@@ -254,8 +254,8 @@ Only specific, dynamic parts of a page are rendered on the server, while other p
 A monorepo is a **single version-controlled repository** that holds the code for multiple projects, services, or components - sometimes across an entire organization.  
   - While it **increases pull request size**, makes it **easier to accidentally introduce bugs** in unrelated parts of the codebase (if rules aren’t enforced), and can **make commit history harder to read**, it also has key advantages:  
   Teams can **leverage shared code functionality** more easily since everything lives in one place.  
-  - To keep things maintainable, it’s critical to define **clear ownership boundaries** between projects and establish **rules for cross-project interactions**.   
-<br>
+  - To keep things maintainable, it’s critical to define **clear ownership boundaries** between projects and establish **rules for cross-project interactions**.    
+
 - **Polyrepo**  
 A polyrepo structure uses **separate, independent repositories** for each project or service. This provides teams with **greater autonomy**, reducing the risk of interfering with each other’s code and making development workflows more isolated.  
   - However, it introduces **operational overhead** - each repository requires its own build and deployment pipelines, and **code duplication becomes more likely** if shared logic isn’t abstracted out.  
@@ -354,8 +354,8 @@ Module Federation has three main concepts:
     ```
 
 3. **Load Remote Component in Shell (Runtime)**   
-    Depending on the technology (`Angular`, `React`, etc.), the Shell app loads the remote component during runtime. In Angular, this is typically done when the corresponding lazy-loaded route is accessed.
-    <br>
+    Depending on the technology (`Angular`, `React`, etc.), the Shell app loads the remote component during runtime. In Angular, this is typically done when the corresponding lazy-loaded route is accessed.  
+    
     **Example in Angular:** Load Angular Remote Component in `app.routes.ts` as the `user-card` route is reached
     ```ts
     export const routes: Routes = [
@@ -770,8 +770,8 @@ Using the mechanisms described above, we can create powerful frontend architectu
   This combination enables a **micro-frontend architecture within a monorepo**:
     - The code for MFEs lives alongside the host app in the same Nx monorepo.
     - Each MFE can have its own working rules, boundaries, and owners thanks to Nx's support for modular project organization.
-    - Micro-frontends are deployed independently, while the host app loads them at runtime via Module Federation integration within the monorepo.  
-<br>
+    - Micro-frontends are deployed independently, while the host app loads them at runtime via Module Federation integration within the monorepo.    
+
 - **Web Components + Module Federation + Polyrepo**  
   This combination results in a **framework-agnostic micro-frontend architecture**:
     - Each MFE lives in a separate Git repository and is maintained and deployed independently.
