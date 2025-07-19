@@ -31,8 +31,8 @@
 - Follow [**Clean Code Principles**](../../architecture/clean-code-principles.md) to improve maintainability and scalability.   
 - Consider general [**front-end security attacks**](https://www.geeksforgeeks.org/blogs/top-common-frontend-security-attacks/) and [**performance best practices**](https://www.geeksforgeeks.org/blogs/best-practices-for-enhancing-application-performance/) when building React applications.   
 
-This documentation contains summaries and trade-offs of various tools and architectural patterns for React applications, based on real learning, official documentation and community best practices.
-
+This documentation contains summaries and trade-offs of various tools and architectural patterns for React applications, based on **real learning**, **official documentation**, and **community best practices**.   
+You can check the [Frontend Architecture](./../architecture-frontend.md) document to dive deep into core architectural concepts and the decision-making process behind choosing them.
 
 ## React Build Tools and Frameworks
 There are several ways to build a project with React:
@@ -711,7 +711,8 @@ export default MyComponent;
 A powerful, open source, technology-agnostic build platform designed to efficiently manage codebases of any scale.
 ### [Turborepo](https://turborepo.com/docs)
 A high-performance build system for `JavaScript` and `TypeScript` codebases. It is designed for scaling monorepos and also makes workflows in [single-package workspaces](https://turborepo.com/docs/guides/single-package-workspaces) faster, too.
-
+### [Vercel](https://vercel.com/solutions/react)
+Vercel is a popular platform for deploying and hosting React applications and many other types of web projects.
 
 ## High-Quality React GitHub Repositories (2025)
 
@@ -743,10 +744,11 @@ A high-performance build system for `JavaScript` and `TypeScript` codebases. It 
 
 ### Cool Community Projects
 
-| Name                 | GitHub URL                                                            | Description                                                                 |
-|----------------------|-----------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| **React E-Commerce** | [smakosh/react-ecommerce](https://github.com/smakosh/react-ecommerce) | Simple yet full-featured e-commerce store built with React + Stripe         |
-| **TinyBase**         | [tinyplex/tinybase](https://github.com/tinyplex/tinybase)             | Experimental reactive state engine using React                              |
+| Name                              | GitHub URL                                                                             | Description                                                                 |
+|-----------------------------------|----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| **React E-Commerce**              | [smakosh/react-ecommerce](https://github.com/smakosh/react-ecommerce)                  | Simple yet full-featured e-commerce store built with React + Stripe         |
+| **TinyBase**                      | [tinyplex/tinybase](https://github.com/tinyplex/tinybase)                              | Experimental reactive state engine using React                              |
+| **React Microfrontend Example**   | [imatiqul/micro-frontend-react](https://github.com/imatiqul/micro-frontend-react)      | React Microfrontend Example with Module Federation                              |
 
 ### Educational Projects
 

@@ -52,7 +52,7 @@ The process of defining relationships and interactions between different **Bound
   - **Shared Kernel**: involves multiple teams sharing a subset of the domain model, which is treated as a shared kernel, while each team maintains its own context and model for the rest of their respective domains.
   - **Customer-Supplier:** one team (the supplier) develops a software system that is consumed by another team (the customer), with a clear upstream-downstream relationship between the two teams.
   - **Conformist:** one team (the conformist) adheres to a model defined by another team, essentially treating the other team’s model as the central, canonical model.
-  - **Anti-Corruption Layer (ACL):** involves creating a translation layer between two different models, allowing them to communicate without tightly coupling or requiring changes to their respective models.
+  - **Anti-Corruption Layer (ACL):** involves creating a translation layer between two different models, allowing them to communicate without tight coupling, while also protecting a bounded context from external changes by shielding it through model translation.
   - **Open Host Service:** one team (the host) provides a service that can be extended by other teams through plugins or adapters, enabling a centralized system with extensibility points.
   - **Published Language:** involves one team (the publisher) defining and publishing a language or protocol that other teams use to integrate with the publisher’s system, without sharing the internal model.
   - **Separate Ways:** teams work on completely separate systems with no integration or shared model, essentially ignoring the existence of other systems and teams.
@@ -263,6 +263,7 @@ src/
 - [DDD Part 2: Tactical Domain-Driven Design](https://vaadin.com/blog/ddd-part-2-tactical-domain-driven-design) by [Petter Holmström](https://github.com/peholmst)
 - [What is Domain Driven Design?](https://www.port.io/glossary/domain-driven-design) by port.io
 - [Domain-Driven Design (DDD): Strategic Design Explained](https://medium.com/@lambrych/domain-driven-design-ddd-strategic-design-explained-55e10b7ecc0f) by [Jakub Lambrych](https://www.linkedin.com/in/jakub-lambrych/)
+- [Strategic Domain Driven Design with Context Mapping](https://www.infoq.com/articles/ddd-contextmapping/)
 
 ### DDD in Front-end
 - [The Guiding Theory: Strategic Design from DDD](https://www.angulararchitects.io/en/blog/modern-architectures-with-angular-part-1-strategic-design-with-sheriff-and-standalone-components/) by [Manfred Steyer](https://www.linkedin.com/in/manfred-steyer-84645821/)
