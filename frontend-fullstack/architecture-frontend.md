@@ -79,7 +79,7 @@ These patterns are concerned with **how classes and objects are composed and org
 
 - **Adapter Pattern**
     - Allows the interface of an existing class to be used as another interface, enabling incompatible interfaces to work together.
-    - **Use Cases:** Integrating legacy systems with new applications, reusing existing code, or making different libraries/frameworks compatible.<br>  
+    - **Use Cases:** Integrating legacy systems with new applications, reusing existing code, or making different libraries/frameworks compatible.    
 
 - **Dependency Injection (DI) Pattern**
     - A pattern where a component receives its dependencies from an external source rather than creating them itself, promoting Inversion of Control and decoupling.
@@ -95,8 +95,8 @@ These patterns are concerned with **algorithms and the assignment of responsibil
 
 - **Observer Pattern**
    - Defines a one-to-many dependency between objects so that when one object (the "subject") changes state, all its dependents (the "observers") are notified and updated automatically.
-   - **Use Cases:** Event-driven systems, state management, and scenarios where changes in one part of the application need to trigger updates in other, independent parts.  
-<br>
+   - **Use Cases:** Event-driven systems, state management, and scenarios where changes in one part of the application need to trigger updates in other, independent parts.<br>  
+
 - **Publisher/Subscriber Pattern (Pub/Sub)**
    - Similar to Observer but with a clearer separation. Publishers send messages to a "channel" or "topic" without knowing which subscribers will receive them. Subscribers listen to specific channels.
    - **Use Cases:** Decoupled communication between components, especially in larger applications or when integrating with external services.
@@ -117,14 +117,14 @@ Choosing the correct rendering model(**CSR**, **SSR**, **SSG**) based on your pr
 
 The following frontend rendering models are available today:
 - **Client-Side Rendering (CSR)**  
-  Means the browser renders HTML from JavaScript after downloading it.  
-<br>
+  Means the browser renders HTML from JavaScript after downloading it.<br>
+
 - **Server-Side rendering (SSR)**  
-  The server generates the HTML for the page, which is then sent to the browser to render.  
-<br>
+  The server generates the HTML for the page, which is then sent to the browser to render.<br>
+
 - **Static Site Generation (SSG)**  
-  Pages are pre-built at build time and served as static files.  
-<br>
+  Pages are pre-built at build time and served as static files.<br>
+
 - **Partial/Incremental Hydration**  
 This is an optimization technique used with SSR or SSG, where only specific, interactive parts of the pre-rendered HTML are **"hydrated"** with client-side JavaScript, rather than the entire page. 
   - It aims to **reduce the amount of JavaScript** sent to the browser and **improve interactivity** by making only necessary components interactive, and often loading other components lazily. 
@@ -167,7 +167,7 @@ High-level front-end architecture patterns answer questions like:
    - In a monolithic architecture, the entire frontend is built as a **single, self-contained unit**.
    - This approach can be simple for smaller applications but becomes **challenging to manage and scale** as the application grows.
    - Code is often **tightly coupled**, which can make it difficult to isolate changes or introduce new features without affecting other parts of the application. This tight coupling often extends to the backend, with both frontend and backend frequently residing in the same repository.  
-<br>
+
 2. **Modular Architecture**
    - Modular architecture involves breaking down the frontend into **independent modules** or sections.
    - Each module can be **developed and maintained separately**, promoting better organization and code reuse.
