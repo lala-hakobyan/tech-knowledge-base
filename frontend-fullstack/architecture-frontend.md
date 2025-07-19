@@ -73,19 +73,19 @@ These patterns deal with **object creation mechanisms**, aiming to create object
 ### Structural Design Patterns
 These patterns are concerned with **how classes and objects are composed and organized to form larger, more complex structures** within an application. They focus on simplifying the design by identifying clear relationships between entities, promoting flexibility and efficiency in building robust applications. In frontend development, this often translates to effectively composing UI components, modules, and services to create adaptable, maintainable, and manageable user interfaces.
 
--  **Facade Pattern**
+- **Facade Pattern**
     - Provides a simplified interface to a larger, more complex subsystem, making it easier to use.
-    - **Use Cases:** Wrapping complex third-party libraries or internal systems with a clean, easy-to-use API.  
-<br>
+    - **Use Cases:** Wrapping complex third-party libraries or internal systems with a clean, easy-to-use API.<br><br>  
+
 - **Adapter Pattern**
     - Allows the interface of an existing class to be used as another interface, enabling incompatible interfaces to work together.
-    - **Use Cases:** Integrating legacy systems with new applications, reusing existing code, or making different libraries/frameworks compatible.  
-<br>
+    - **Use Cases:** Integrating legacy systems with new applications, reusing existing code, or making different libraries/frameworks compatible.<br><br>  
+
 - **Dependency Injection (DI) Pattern**
     - A pattern where a component receives its dependencies from an external source rather than creating them itself, promoting Inversion of Control and decoupling.
     - While not originally part of the GoF catalog, DI is a widely adopted structural pattern in frontend frameworks
-    - **Use Cases:** Essential for creating modular, testable, and maintainable code in large applications. Heavily integrated into frameworks like Angular.  
-<br>
+    - **Use Cases:** Essential for creating modular, testable, and maintainable code in large applications. Heavily integrated into frameworks like Angular.<br><br>  
+
 - **Strategy Pattern**
     - Involves defining a group of different algorithms and making it possible to choose and switch between them as needed while a program is running.
     - **Use Cases:** Ideal for scenarios where an object's behavior needs to be selected and switched at runtime, promoting flexible and easily extensible solutions for varying algorithms (e.g., different sorting methods, payment options, or validation rules).
