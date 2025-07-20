@@ -32,7 +32,7 @@
 - Consider general [**front-end security attacks**](https://www.geeksforgeeks.org/blogs/top-common-frontend-security-attacks/) and [**performance best practices**](https://www.geeksforgeeks.org/blogs/best-practices-for-enhancing-application-performance/) when building React applications.   
 
 This documentation contains summaries and trade-offs of various tools and architectural patterns for React applications, based on **real learning**, **official documentation**, and **community best practices**.   
-You can check the [Frontend Architecture](./../architecture-frontend.md) document to dive deep into core architectural concepts and the decision-making process behind choosing them.
+You can check the [Frontend Architecture Overview](../frontend-architecture/architecture-overview-frontend) document to dive deep into core architectural concepts and the decision-making process behind choosing them.
 
 ## React Build Tools and Frameworks
 There are several ways to build a project with React:
