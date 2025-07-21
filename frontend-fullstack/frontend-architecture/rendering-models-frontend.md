@@ -24,7 +24,7 @@ The following frontend rendering models are available today:
 - With server-side rendering, your server runs the frontend technology to produce an HTML response for every request, which may **increase server hosting costs**.
 
 ## Static Site Generation (SSG)
-**Static Site Generation (Pre-rendering)** means that pages are pre-built at build time and served as static files.
+**Static Site Generation (Pre-rendering)** means that pages are **pre-built at build time on the server**, and served as static files.
 - Pre-rendering offers **faster page loads than both client-side and server-side rendering**. Because it **creates HTML documents at build time**, the server can directly respond to requests with the static HTML document without any additional work.
 - Pre-rendering requires that all **information needed to render a page is available at build time**. This means prerendered pages cannot include user-specific data. It is primarily useful for **pages that are the same for all users**.
 - Because prerendering occurs at build time, it may **add significant time to your production builds**. Using `getPrerenderParams` to produce many HTML documents may increase deployment size and **slow down deployments**.
@@ -108,7 +108,7 @@ In this example:
 - The `ClientButton` is explicitly marked as a client-side component using `'use client'`.
 - During hydration, only `ClientButton` is hydrated, and not the rest of the page.
 
-This is a clear example of partial hydration — only the interactive part (`ClientButton`) is hydrated, while the rest remains static.
+This is a clear example of partial hydration - only the interactive part (`ClientButton`) is hydrated, while the rest remains static.
 
 ```tsx
 // app/page.tsx (Server Component by default)
@@ -157,5 +157,5 @@ Modern frameworks often allow you to mix and match strategies to optimize for **
 |-----------------------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
 | **Client-Side (CSR)**             | - Simple dev setup<br> - Full browser API support<br> - Lowest server cost                | - Slower performance<br> - Poor SEO<br> - JS must fully load to render                      | The server sends the initial minimal HTML, the client downloads the JavaScript and renders the entire UI dynamically. | **SPAs, Web applications, low-SEO needs, offline/PWA use cases**                                                           |
 | **Server-Side (SSR)**             | - Fast initial load<br> - Great SEO<br> - Server-side data fetching                       | - Higher server cost<br> - No browser-only libs<br> - Angular runs on each request          | The server renders HTML, sends to the client for display                                                              | **SEO-critical sites, user-specific data on first load, content heavy websites**                                           |
-| **Prerendering (SSG)**            | - Fastest page load<br> - Great SEO<br> - CDN caching<br> - Zero server load per request  | - Build-time data only<br> - Slower build time<br> - Not for dynamic or user-specific pages | The server generates static HTML, the client uses JavaScript to update                                                | **Websites that require fast initial load times and dynamic updates, static content, marketing pages, blogs, docs**        |
+| **Prerendering (SSG)**            | - Fastest page load<br> - Great SEO<br> - CDN caching<br> - Zero server load per request  | - Build-time data only<br> - Slower build time<br> - Not for dynamic or user-specific pages | The server generates static HTML on build-time, the client uses JavaScript to update                                  | **Websites that require fast initial load times and dynamic updates, static content, marketing pages, blogs, docs**        |
 | **Partial/Incremental Hydration** | - Improved performance<br> - Reduced JavaScript<br> - Fine-grained control                | - More complex setup<br> - Framework-dependent<br> - Still evolving as a standard           | SSR/SSG pre-renders HTML; only selected interactive components are hydrated client-side                               | **Sites that benefit from fast static delivery but still need interactivity (e.g., dashboards, e-commerce product pages)** |
