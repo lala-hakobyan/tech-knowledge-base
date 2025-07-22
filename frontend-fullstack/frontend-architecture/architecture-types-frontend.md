@@ -51,7 +51,7 @@ High-level front-end architecture patterns answer questions like:
 
 
 ## Internal Application Architecture Patterns
-**Internal Application Architecture Patterns** (sometimes referred to as **Architectural Design Patterns**) focus on the organization of code and data flow *within* a single, cohesive frontend application or a specific module/component of a larger system. They address concerns like separation of responsibilities, state management, and interaction between UI layers.
+**Internal Application Architecture Patterns** (sometimes referred to as **Architectural Design Patterns**) focus on the organization of code and **data flow within a single, cohesive frontend application or a specific module/component** of a larger system. They address concerns like separation of responsibilities, state management, and interaction between UI layers.
 
 These patterns answer questions like:
 - How is the **user interface** logic separated from **the data**?
@@ -73,7 +73,7 @@ These patterns answer questions like:
         - **View:** The actual UI elements, purely presentational.
         - **ViewModel:** An abstraction of the View that exposes data and commands, handling the View's display logic and acting as an intermediary between the View and the Model. It often uses data binding to synchronize View and ViewModel.
     - **Use Cases**  
-      Core to frameworks with strong data binding like **Angular** and **Vue.js**, used when complex data binding and UI logic are involved.
+      Commonly used in frameworks that support two-way data binding and declarative UI logic, such as **Angular** and **Vue.js**. Well-suited for applications with complex UI interactions and state synchronization between model and view.
 
 3. **Flux Architecture**
     - Introduced by **Facebook (Meta)** for managing application state in **complex component-based applications**. It enforces a unidirectional data flow with four main components:
@@ -96,7 +96,7 @@ In addition to common architecture patterns, front-end applications can also be 
 - **Server-Side Rendered (SSR) Applications**  
   The initial HTML for each page is **generated on the server for every request**. This provides **fast initial load times** and **good SEO**, with the client-side JavaScript then taking over to make the page interactive (**hydration**).
     - **How it works:** When a request comes in, the server runs the application code (which can render to HTML), generates the full HTML for that specific page, and sends it to the browser. The browser displays this HTML immediately. Concurrently, the client-side JavaScript for the entire page is downloaded and executed, "hydrating" the HTML by attaching event listeners and making the page fully interactive.
-    - **Examples:** Next.js (default pages router), Angular Universal, Nuxt.js (default options).
+    - **Examples:** Next.js (default pages router), Angular Universal (Angular's SSR solution), Nuxt.js (default options).
 
 - **Isomorphic (Universal) Applications**  
   These are applications where the **same codebase runs on both the server and the client**. This means that components and logic written once can be used to **render the initial HTML on the server** (benefiting initial load and SEO) and then **take over and manage interactivity on the client** (providing a rich SPA experience).
@@ -175,17 +175,21 @@ It is the foundation of modern **micro-frontend architectures**, where each app 
 
 Module Federation has three main concepts:
 
-- **Shell (Host)**  
+1. **Shell (Host)**  
   The main app that bootstraps and integrates other apps (remotes) at runtime.
 
-- **Remote App**  
+2. **Remote App**  
   A self-contained micro-frontend that exposes components/modules for others to consume via `remoteEntry.js` (generated at build time).
 
-- **`remoteEntry.js`**  
-  A self-invoking JavaScript manifest file that bootstraps a shared module system:
+3. **`remoteEntry.js`**  
+  A self-invoking JavaScript manifest file that bootstraps a shared module system. `remoteEntry.js` does not contain the actual code of the exposed modules, but rather references to them. It essentially acts as a manifest, detailing which modules are exposed by the remote, where to find them, and any shared dependencies they might have.
     - Maps module names (e.g., `./UserCard`) to actual implementations
     - Contains logic to load and resolve shared dependencies
     - Hooks into the host’s module registry dynamically
+      - Registers the remote container at **runtime**, not during the host's build
+      - Makes exposed modules available to the host as if they were local
+      - Resolves and reuses shared dependencies from the host when versions are compatible
+      - This dynamic registration happens **only when `remoteEntry.js` is loaded by the host (shell) during runtime in the browser.**
     - **Note**: It does **not** use ES6 `import/export` syntax. Instead, it uses **Webpack's** internal runtime (`__webpack_require__`) for defining modules.
 
 ---
@@ -241,7 +245,7 @@ Module Federation has three main concepts:
 3. **Load Remote Component in Shell (Runtime)**   
    Depending on the technology (`Angular`, `React`, etc.), the Shell app loads the remote component during runtime. In Angular, this is typically done when the corresponding lazy-loaded route is accessed.
 
-   **Example in Angular:** Load Angular Remote Component in `app.routes.ts` as the `user-card` route is reached.
+   **Example in Angular:** Load Angular Remote Application via `app.routes.ts` when the `user-card` route is accessed.
     ```ts
     export const routes: Routes = [
         {
@@ -256,18 +260,16 @@ Module Federation has three main concepts:
     ];
     ```
 
-   **Example in Angular (if not web component):** Load Angular Remote Component in app component and convert it to the Angular component.
+   **Example in Angular (if not web component):** Load Angular Remote Application in the app component and instantiate it as an Angular component for use in the UI.
     ```ts
-    // app.component.ts
+    // app.component.ts (shell app)
     
     @Component({
       selector: 'app-root',
       templateUrl: './app.component.html',
       styleUrls: ['./app.component.scss'],
     })
-    export class AppComponent implements OnInit, OnDestroy {
-      title = 'shell-app';
-    
+    export class AppComponent implements OnInit {
       // Get a reference to the <ng-container> element in the template
       @ViewChild('userCardContainer', { read: ViewContainerRef, static: true })
       userCardContainer!: ViewContainerRef;
@@ -281,12 +283,6 @@ Module Federation has three main concepts:
       }
     
       async loadUserCard(): Promise<void> {
-        // Clear any previously loaded component if you want to load fresh
-        if (this.userCardComponentRef) {
-          this.userCardComponentRef.destroy();
-          this.userCardContainer.clear();
-        }
-    
         try {
           // Dynamically load the remote module
           const module = await loadRemoteModule({
@@ -306,17 +302,7 @@ Module Federation has three main concepts:
           // For example, setting an input property: this.userCardComponentRef.instance.userId = '123';
     
         } catch (error) {
-          console.error('Failed to load remote UserCardComponent:', error);
           // Handle error, e.g., display a fallback message
-          this.userCardContainer.clear();
-          this.userCardContainer.element.nativeElement.innerText = 'Failed to load user card.';
-        }
-      }
-    
-      ngOnDestroy(): void {
-        // Clean up the dynamically created component when the host component is destroyed
-        if (this.userCardComponentRef) {
-          this.userCardComponentRef.destroy();
         }
       }
     }
@@ -326,12 +312,6 @@ Module Federation has three main concepts:
     <h1>Shell Application Dashboard</h1>
     
     <div class="main-content">
-        <div class="local-widgets">
-            <h2>Local Widgets</h2>
-            <p>This is a local component or static content.</p>
-            <app-some-local-widget></app-some-local-widget>
-        </div>
-    
         <div class="remote-component-container">
             <h2>Remote User Card</h2>
             <ng-container #userCardContainer></ng-container>
@@ -342,7 +322,7 @@ Module Federation has three main concepts:
    ⚠️ **Important:**
     - If you expose components this way, the Shell and all MFEs must use the same framework (e.g., Angular).
     - To make micro-frontends framework-agnostic, expose components as Web Components instead.
-    - In that case we would be able to load `remoteentry.js` and just use the component in html like this:
+    - In that case we would be able to load `remoteEntry.js` and just use the component in html like this:
        ```html
           <user-card userId="currentId"></user-card>
        ```
@@ -411,11 +391,11 @@ Nx provides tools to give you the benefits of a monorepo without the drawbacks o
     - **Ownership is enforced** using `CODEOWNERS`, limiting who can approve changes per project.
     - Libraries expose **constrained public APIs** and follow defined **dependency rules**.
 
-2. **Tooling, Consistency & Developer Experience**
-    - Nx extends Angular CLI with **monorepo-focused tools**.
-    - **Unified command execution** (build, test, lint, serve) via executors.
-    - Custom scaffolding via generators to **automate and standardize** project structure.
-    - Integration with **modern tools**: `Jest`, `Cypress`, `Storybook`, etc.
+2. **Tooling, Consistency & Developer Experience**   
+   - Provide **monorepo-focused tooling** on top of modern JavaScript/TypeScript ecosystems.
+   - **Unified command execution** (build, test, lint, serve) via executors.
+   - Custom scaffolding via generators to **automate and standardize** project structure.
+   - Integration with **modern tools**: `Jest`, `Cypress`, `Storybook`, etc.
 
 3. **Performance: Build, Test & Deploy at Scale**
     - Affected commands detect what changed and **only rebuild/test relevant projects**.
@@ -470,15 +450,19 @@ In this approach:
 
 ---
 
-#### Benefits and Pitfalls of this Approach
+#### Benefits of Monorepo + Polyrepos (npm packages)
+- Simple integration using **npm packages**                                                        
+- Encourages **code isolation** and **team independence**                                                               
+- **Strong compatibility** with Angular and **TypeScript-based projects**                     
+- Easier to manage with CI/CD pipelines using **standard versioning**
 
-| Benefits                                                             | Pitfalls                                                                                   |
-|----------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
-| ✅ Simple integration using npm packages                             | ❌ Requires shell redeployment after each micro-frontend update                            |
-| ✅ Encourages code isolation and team independence                   | ❌ Not true runtime micro-frontend loading                                                 |
-| ✅ Strong compatibility with Angular and TypeScript-based projects   | ❌ All micro-frontends must use the same framework (typically Angular)                    |
-| ✅ Easier to manage with CI/CD pipelines using standard versioning   | ❌ Tight coupling between shell and micro-frontends compared to runtime-based approaches   |
+---
 
+#### Pitfalls with Monorepo + Polyrepos (npm packages)
+- Requires **shell redeployment after each micro-frontend update**                            
+- Not true runtime micro-frontend loading                                                 
+- All **micro-frontends must use the same framework** (typically Angular)                     
+- **Tight coupling between shell and micro-frontends** compared to runtime-based approaches   
 
 ---
 
@@ -499,7 +483,7 @@ They are built on three core technologies:
 ---
 
 #### Core Concepts of Web Components in MFE Architecture
-In **Micro-Frontend (MFE) architecture**, Web Components are a powerful tool for building **reusable, encapsulated UI elements** that can be **shared across different applications and frameworks**. They provide a modular and maintainable approach to UI development, making them an ideal fit for micro frontend architectures.
+In **Micro-Frontend (MFE) architecture**, Web Components are a powerful tool for building **reusable, encapsulated UI elements** that can be **shared across different applications and frameworks**. They provide a modular and maintainable approach to UI development, making them an ideal fit for micro-frontend architectures.
 
 Below are core concepts of web components which play key role in MFE Architecture:
 - **Reusability**  
@@ -554,28 +538,33 @@ This is because web component is a web standard and is not tight to any framewor
 ---
 
 #### Benefits of using Web Components in MFEs
-- **Reduced Development Time:** Reusable components mean less code to write and maintain.
-- **Improved Code Maintainability:** Encapsulation makes it easier to understand and modify individual components.
-- **Increased Team Autonomy:** Teams can work on different parts of the application independently.
-- **Technology Agnostic:** Web Components can be used with any framework or no framework at all.
-- **Better Scalability:** MFEs built with Web Components can be **scaled more easily** as they are independent and reusable.
+- **Reduced Development Time**   
+Reusable components mean less code to write and maintain.
+- **Improved Code Maintainability**   
+Encapsulation makes it easier to understand and modify individual components.
+- **Increased Team Autonomy**   
+Teams can work on different parts of the application independently.
+- **Technology Agnostic**   
+Web Components can be used with any framework or no framework at all.
+- **Better Scalability**  
+MFEs built with Web Components can be **scaled more easily** as they are independent and reusable.
 
 ---
 
 #### Pitfalls with using Web Components in MFEs
-- **SEO Issues with Shadow DOM:**
+- **SEO Issues with Shadow DOM**  
   Content within the Shadow DOM might not be indexed by search engines, potentially impacting SEO. Workarounds like using slot elements or server-side rendering can mitigate this.
-- **Performance Overhead:**
+- **Performance Overhead**  
   **Excessive use of Shadow DOM** can cause **performance bottlenecks**, especially when polyfills are needed for older browsers.  
   Additionally, if core or helper libraries aren't shared across Web Components, the same library may be loaded multiple times on the page, further impacting performance.  
   To avoid this, it's important to consider **dependency sharing strategies**, such as those enabled by **Module Federation**.
-- **Styling Limitations:**
+- **Styling Limitations**  
   Global styles don't automatically apply within the Shadow DOM, requiring specific strategies like scoped CSS or custom properties.
-- **Lack of Built-in State Management:**
+- **Lack of Built-in State Management**  
   Unlike frameworks, Web Components don't offer built-in state management, requiring developers to implement their own solutions or rely on external libraries.
-- **Event Handling Complexity:**
+- **Event Handling Complexity**  
   Inter-component communication between Web Components and other frameworks can be more complex, relying on custom events and propagation techniques.
-- **Form Handling Issues:**
+- **Form Handling Issues**  
   Web Components **don't automatically integrate with native form elements**, such as input collection and validation. Additional handling, such as syncing values to hidden inputs or using the `ElementInternals API`, is required to integrate them fully with native forms.
 
 ---
@@ -637,7 +626,7 @@ This is because web component is a web standard and is not tight to any framewor
   Strategic DDD introduces complexity that may be unnecessary for small or short-lived applications. If the domain logic is simple, the modeling and context mapping effort may slow down development without significant benefits.
 
 - **Misalignment Without Strong Domain Collaboration**  
-  DDD is not just a front-end or technical decision—it requires continuous collaboration with domain experts. Applying strategic design without this alignment can result in disconnected models and over-engineering.
+  DDD is not just a front-end or technical decision - it requires continuous collaboration with domain experts. Applying strategic design without this alignment can result in disconnected models and over-engineering.
 
 - **Not a One-Team Initiative**  
   Strategic design is most effective when applied across multiple teams or domains. Trying to adopt it in isolation within a single front-end team, without backend or product alignment, may lead to inconsistent architecture and duplicated logic.

@@ -69,7 +69,7 @@ You can check the [Frontend Architecture Overview](../frontend-architecture/arch
 ## Project Structure, Naming Conventions and Best Practices
 ### Standalone Folder Structure
 **Standalone components** in Angular are components that can operate independently without being part of an `NgModule`. Introduced to simplify the development process, they promote a more modular and flexible architecture. 
-- A standalone component is self-contained—it declares its own dependencies and configuration directly, without relying on external modules.
+- A standalone component is self-contained - it declares its own dependencies and configuration directly, without relying on external modules.
 - Previously, dependencies were declared in shared modules, and importing those modules across components could lead to unnecessary code being bundled, affecting performance. With standalone components, we can reduce that overhead by importing only what each component actually needs.
 - While `NgModules` are not deprecated and can still be used where appropriate, standalone components became the default for new components starting with Angular v17 and are recommended as the **preferred approach by the Angular team**.
 
@@ -445,7 +445,7 @@ Below are some of the built-in design patterns in Angular:
 #### MVVM (Model-View-ViewModel) Principles
 - **Definition:** An architectural pattern that separates the UI (View) from the business logic (Model) using a ViewModel layer that exposes data and commands.
 - **Angular Context:** Angular components inherently adopt **principles of MVVM**. The **Component Class** acts as the ViewModel (containing presentation logic and exposing data to the template), the **Component Template** (HTML) is the View (responsible for rendering the UI), and **Services** (often interacting with `RxJS Observables` or `Signals`) represent the Model (handling data fetching and business logic).
-- **Note:** While Angular components reflect MVVM principles, the framework doesn’t enforce a strict separation between Model and ViewModel—this is left to developer discipline.
+- **Note:** While Angular components reflect MVVM principles, the framework doesn’t enforce a strict separation between Model and ViewModel - this is left to developer discipline.
 - **Example:**
     ```ts
     // user.service.ts (Model)
@@ -891,7 +891,7 @@ The [Sheriff](https://github.com/softarc-consulting/sheriff) open-source project
   - **DDD is a complex design approach**, and we should be cautious when choosing to apply it in Angular projects.
   - In essence, **DDD is a powerful tool**, but only when the **domain complexity justifies** the effort of modeling it explicitly.  
     For **simple applications**, the overhead introduced by DDD might not be worthwhile.
-  - A key point: **DDD is not just an architectural decision**—it is a **company-wide, domain-driven choice**.  
+  - A key point: **DDD is not just an architectural decision** - it is a **company-wide, domain-driven choice**.  
     Successful adoption requires **strong involvement from domain experts** and a **clear business initiative**.<br><br>
 
 #### When is Strategic DDD a Good Fit in Angular
@@ -917,9 +917,154 @@ Angular Module Federation, powered by **Webpack 5's Module Federation** feature,
 #### Integration in Angular
 In Angular, Module Federation can be integrated through the [`@angular-architects/module-federation` library](https://www.npmjs.com/package/@angular-architects/module-federation)  
 Use these steps to set up Module Federation in your Angular project:
-- Install the library: `ng add @angular-architects/module-federation`
-- Adjust the generated `webpack.config.js` file
-- For more detailed steps, check [this link](https://www.angulararchitects.io/blog/dynamic-module-federation-with-angular/) on the official angulararchitects.io website.
+1. **Install the library** 
+```
+ng add @angular-architects/module-federation
+```
+2. **Remote App (Microfrontend)**: Configure `webpack.config.js` file**
+   - Define name and filename: `remoteEntry.js`  
+   - Expose components or modules via `exposes`.
+   - Share Angular libs between microfrontends and shell (`@angular/core`, `@angular/common`, `@angular/router`) with singleton and strictVersion.
+```ts
+    new ModuleFederationPlugin({
+      name: "user-mfe", // This is the actual unique name of your remote application, and it should match the name specified in the shell's Webpack config under remotes.
+      filename: "remoteEntry.js", // File to be loaded by shell
+      exposes: {
+        './UserCard': './src/app/user-card/user-card.component.ts', // Component to expose
+      },
+      shared: share({
+        "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+        "@angular/common": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+        "@angular/router": { singleton: true, strictVersion: true, requiredVersion: 'auto' }
+      })
+    })
+```
+3. **Shell (Host App): Configure `webpack.config.js` file**
+   - Add the remote entry in remotes using the same name defined in the remote's config.
+   - Share the same Angular dependencies with singleton and version strictness.
+```ts
+    new ModuleFederationPlugin({
+      remotes: {
+        'user-mfe': 'user-mfe@http://localhost:4201/remoteEntry.js', // Explicit remote entry, name must match with remote application *unique name*
+      },
+      shared: share({
+        "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+        "@angular/common": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+        "@angular/router": { singleton: true, strictVersion: true, requiredVersion: 'auto' }
+      })
+    });
+```
+4. **Load Remote Component in Shell (Runtime)**   
+   In Angular we can load the exposed component on shell side in different ways.
+
+   - **Example 1:** Load Angular Remote Application via `app.routes.ts` when the `user-card` route is accessed.
+        ```ts
+        export const routes: Routes = [
+            {
+                path: 'user-card',
+                loadChildren: () =>
+                    loadRemoteModule({
+                        type: 'module',
+                        remoteEntry: 'http://localhost:4201/remoteEntry.js',
+                        exposedModule: './UserCard'
+                    }).then(m => m.UserCardModule)
+            }
+        ];
+        ```
+
+   - **Example 2 (if not a Web Component):** Load Angular Remote Application in the app component and instantiate it as an Angular component for use in the UI.
+        ```ts
+        // app.component.ts
+        
+        @Component({
+          selector: 'app-root',
+          templateUrl: './app.component.html',
+          styleUrls: ['./app.component.scss'],
+        })
+        export class AppComponent implements OnInit, OnDestroy {
+          title = 'shell-app';
+        
+          // Get a reference to the <ng-container> element in the template
+          @ViewChild('userCardContainer', { read: ViewContainerRef, static: true })
+          userCardContainer!: ViewContainerRef;
+        
+          private userCardComponentRef: ComponentRef<any> | null = null; // To hold reference to the loaded component
+        
+          constructor() {}
+        
+          ngOnInit(): void {
+            this.loadUserCard();
+          }
+        
+          async loadUserCard(): Promise<void> {
+            // Clear any previously loaded component if you want to load fresh
+            if (this.userCardComponentRef) {
+              this.userCardComponentRef.destroy();
+              this.userCardContainer.clear();
+            }
+        
+            try {
+              // Dynamically load the remote module
+              const module = await loadRemoteModule({
+                type: 'module',
+                remoteEntry: 'http://localhost:4201/remoteEntry.js', // URL of the remoteEntry.js
+                exposedModule: './UserCard', // The name of the exposed module as defined in remote's webpack.config.js
+                remoteName: 'user-mfe', // The name of the remote as defined in shell's webpack.config.js
+              });
+        
+              // Get the component class from the loaded module
+              const UserCardComponent = module.UserCardComponent;
+        
+              // Create an instance of the remote component inside our container
+              this.userCardComponentRef = this.userCardContainer.createComponent(UserCardComponent);
+        
+              // You can now interact with the component instance if needed
+              // For example, setting an input property: this.userCardComponentRef.instance.userId = '123';
+        
+            } catch (error) {
+              console.error('Failed to load remote UserCardComponent:', error);
+              // Handle error, e.g., display a fallback message
+              this.userCardContainer.clear();
+              this.userCardContainer.element.nativeElement.innerText = 'Failed to load user card.';
+            }
+          }
+        
+          ngOnDestroy(): void {
+            // Clean up the dynamically created component when the host component is destroyed
+            if (this.userCardComponentRef) {
+              this.userCardComponentRef.destroy();
+            }
+          }
+        }
+        ```
+    
+        ```html
+        <h1>Shell Application Dashboard</h1>
+        
+        <div class="main-content">
+            <div class="local-widgets">
+                <h2>Local Widgets</h2>
+                <p>This is a local component or static content.</p>
+                <app-some-local-widget></app-some-local-widget>
+            </div>
+        
+            <div class="remote-component-container">
+                <h2>Remote User Card</h2>
+                <ng-container #userCardContainer></ng-container>
+            </div>
+        </div>
+        ```
+
+5. **Expose remote app as a Web Component to achieve framework independence**
+It is important to note the following:
+   - If you expose just Angular components, the Shell and all MFEs must use the same framework (e.g., Angular).
+   - To make micro-frontends framework-agnostic, expose components as Web Components instead.
+   - In that case we would be able to load `remoteEntry.js` and just use the component in html like this:
+      ```html
+         <user-card userId="currentId"></user-card>
+      ```
+
+For more detailed steps, check [Module Federation integration guide by angulararchitects.io](https://www.angulararchitects.io/blog/dynamic-module-federation-with-angular/).
 
 
 ### Custom Elements (Web Components)
@@ -980,9 +1125,9 @@ Nx Monorepo provides tools to give you the benefits of a monorepo without the dr
    ```
 
    Choose:
-  - `apps/libs` layout
-  - Framework preset: `Angular`
-  - Give the name of your first app, e.g. `demo`
+   - `apps/libs` layout
+   - Framework preset: `Angular`
+   - Give the name of your first app, e.g. `demo`
 
 3. **Workspace Folder Structure**  
    Once generated, your monorepo structure will look like:
@@ -1211,7 +1356,7 @@ export class ShoppingCart {
 ```
 
 ### Custom Signal Store
-[Angular Signals](https://angular.dev/guide/signals) are a reactive, Angular-native primitive introduced to enhance state management and optimize change detection within Angular applications. They provide a synchronous, fine-grained mechanism for tracking and reacting to changes in application state — meaning updates happen immediately and precisely when a tracked value changes, similar to working with primitive values, but with the added benefit of automatically reacting to those changes.
+[Angular Signals](https://angular.dev/guide/signals) are a reactive, Angular-native primitive introduced to enhance state management and optimize change detection within Angular applications. They provide a synchronous, fine-grained mechanism for tracking and reacting to changes in application state - meaning updates happen immediately and precisely when a tracked value changes, similar to working with primitive values, but with the added benefit of automatically reacting to those changes.
 - Angular Signals work by granularly tracking how and where your state is used throughout an application, allowing the framework to optimize rendering updates. 
 - A signal is a **wrapper around a value** that **notifies interested consumers** when that value changes. 
 - Signals can hold any value - from **primitives to complex data structures**.
@@ -1359,7 +1504,7 @@ Reactive forms provide a **model-driven approach** to handling form inputs whose
 - Each change to the form state creates a **new state**, preserving the integrity of the model.
 - Reactive forms are built around **observable streams**, where input values can be accessed synchronously.
   - **Observable Streams:** This means that the `valueChanges` and `statusChanges` properties are indeed `Observable`s, meaning changes propagate reactively.
-  - **Synchronous Access:** At any given moment, you can synchronously get the current value of a `FormControl` or `FormGroup` using its .value property (e.g., this.addressForm.value or this.addressForm.get('fullName').value). You don't need to subscribe to an observable to retrieve the current value — it is available synchronously. The observables simply notify you when that value changes.
+  - **Synchronous Access:** At any given moment, you can synchronously get the current value of a `FormControl` or `FormGroup` using its .value property (e.g., this.addressForm.value or this.addressForm.get('fullName').value). You don't need to subscribe to an observable to retrieve the current value - it is available synchronously. The observables simply notify you when that value changes.
 - On the **component side**, reactive forms are defined using classes like `FormControl`, `FormGroup`, `FormArray`, etc.
 - On the **template side**, reactive forms bind to the model using directives like `formControlName`, `formGroupName`, `formArrayName`, etc.
 - In order to use reactive forms, the `ReactiveFormsModule` should be imported into your `NgModule` or component's imports array (for standalone components).
@@ -1676,11 +1821,11 @@ export class DropdownValidator implements  Validator {
 | **Mutability**               | **Immutable**: model returns a new instance on change                                                    | **Mutable**: two-way binding directly updates the model                                         |
 | **Observables / Reactivity** | Uses `valueChanges` observable for control state tracking and transformation                             | Uses `ngModelChange` and manual change detection                                                |
 | **Validation**               | Custom and built-in **functions** used directly in the class (`Validators.required`, etc.)               | Uses **directives** in the template (`required`, `minlength`, or custom validator directives)   |
-| **Control**                  | Full programmatic control — great for complex, dynamic, and nested forms                                 | Abstracted logic — better suited for simple forms                                               |
+| **Control**                  | Full programmatic control - great for complex, dynamic, and nested forms                                 | Abstracted logic - better suited for simple forms                                               |
 | **Scalability**              | Highly scalable and maintainable                                                                         | Less scalable for large or dynamic forms                                                        |
-| **Testability**              | Easy to unit test without rendering the UI, fully synchronous and predictable                            | Harder to test — requires understanding of change detection and async behavior                  |
-| **Learning Curve**           | Higher — requires understanding of RxJS and more explicit setup                                          | Lower — easier for beginners and straightforward use cases                                      |
-| **Popularity**               | ⭐ Very popular and widely used in modern Angular projects.                                              | ⚠️ Less common in large-scale apps; mostly used in small or legacy codebases.                   |
+| **Testability**              | Easy to unit test without rendering the UI, fully synchronous and predictable                            | Harder to test - requires understanding of change detection and async behavior                  |
+| **Learning Curve**           | Higher - requires understanding of RxJS and more explicit setup                                          | Lower - easier for beginners and straightforward use cases                                      |
+| **Popularity**               | ⭐ Very popular and widely used in modern Angular projects.                                               | ⚠️ Less common in large-scale apps; mostly used in small or legacy codebases.                   |
 | **Use Case Recommendation**  | - Complex, large-scale forms<br>- Forms with dynamic controls or custom logic<br>- Reactive architecture | - Simple forms (e.g. login, newsletter signup)<br>- Quick setup with minimal logic in component |
 
 
@@ -1917,7 +2062,7 @@ By installing the ESLint extension in your **IDE** (e.g., VS Code, WebStorm), yo
 
 - [`angular-eslint`](https://github.com/angular-eslint/angular-eslint)
   - This is the core package that exposes most of the other packages below for the common use case of using `angular-eslint` with Angular CLI workspaces.
-  - It exposes all the tooling needed to work with ESLint v9 and typescript-eslint v8 with flat config in v18 of angular-eslint onwards.
+  - It exposes all the tooling needed to work with ESLint v9 and typescript-eslint v8 with flat config in v18 of `angular-eslint` onwards.
   - For versions older than v18, or workspaces still using ESLint v8 and typescript-eslint v7 or the legacy `eslintrc` config format, you will use a combination of the packages below directly.
   - Install package using: `ng add angular-eslint`
 
