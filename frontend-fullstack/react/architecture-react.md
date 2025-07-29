@@ -502,7 +502,7 @@ export default function ThemeSwitcher() {
 
 
 ### Using Multiple Contexts
-You can define **multiple contexts in React**. Just like in Angular where you have multiple services (`AuthService`, `ThemeService`, etc.) to separate concerns like theme, auth, cart, or feature toggles, in React you can create multiple contexts—each for a different concern.
+You can define **multiple contexts in React**. Just like in Angular where you have multiple services (`AuthService`, `ThemeService`, etc.) to separate concerns like theme, auth, cart, or feature toggles, in React you can create multiple contexts - each for a different concern.
 - You can create as many contexts as you need.
 - Each context can wrap only parts of the tree that need it.
 - This is very similar in spirit to Angular's multiple services architecture.
@@ -569,7 +569,7 @@ export default function ThemeSwitcher() {
 }
 ```
 
-## 🔒 Encapsulating Context Logic (Best Practice)
+### Encapsulating Context Logic (Best Practice)
 By default, React Context values are just JavaScript objects, so any component consuming the context has access to everything inside - both state and any setter functions.
 But you can protect the context in a structured and idiomatic way by encapsulating logic inside the context provider.
 
@@ -578,7 +578,7 @@ To avoid exposing raw `setState`, we can wrap context logic in custom hooks and 
 - All logic is centralized
 - Consistent and safe state updates
 
-### Example: AuthContext with Logic Encapsulation
+#### Example: AuthContext with Logic Encapsulation
 
 ```tsx
 // AuthContext.tsx
@@ -603,10 +603,9 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => useContext(AuthContext);
 ```
 
-### Components Using Safe API
-
 ```tsx
 // LoginButton.tsx
+// Component is using Safe API
 import { useAuth } from './AuthContext';
 
 export function LoginButton() {
@@ -617,6 +616,7 @@ export function LoginButton() {
 
 ```tsx
 // LogoutButton.tsx
+// Component is using Safe API
 import { useAuth } from './AuthContext';
 
 export function LogoutButton() {
@@ -671,14 +671,14 @@ Let's explore a small example of using a Zustand store in a **Next.js** project 
 
 2. **Component 1: Load Notes (`components/NotesList.tsx`)**  
    - `fetchNotes` runs in `NotesList` once. `fetchNotes` is safe to use in the effect dependency because Zustand's function references are stable.
-   - `NotesList` re-renders automatically when a new note is added and notes update
+   - `NotesList` re-renders automatically when a new note is added and notes update   
 
     ```tsx
     // `components/NotesList.tsx`
     'use client';
     
     import { useEffect } from 'react';
-    import { useNotesStore } from '../store/notesStore';
+    import { useNotesStore } from '@/store/notesStore';
     
     export default function NotesList() {
       const { notes, fetchNotes } = useNotesStore();
@@ -702,7 +702,7 @@ Let's explore a small example of using a Zustand store in a **Next.js** project 
     // components/AddNote.tsx
     'use client';
     
-    import { useNotesStore } from '../store/notesStore';
+    import { useNotesStore } from '@/store/notesStore';
     
     export default function AddNote() {
       const addNote = useNotesStore((s) => s.addNote);
@@ -721,11 +721,11 @@ Let's explore a small example of using a Zustand store in a **Next.js** project 
 
 4. **App Layout Example (`app/page.tsx` or wherever you use the components)**
     ```tsx
-    // app/page.tsx
-    import NotesList from './components/NotesList';
-    import AddNote from './components/AddNote';
+    // app/notes/page.tsx
+    import NotesList from '@/components/NotesList';
+    import AddNote from '@/components/AddNote';
     
-    export default function Home() {
+    export default function Notes() {
       return (
         <main>
           <AddNote />
@@ -1153,7 +1153,9 @@ Sass supports two different syntaxes, each with their own extension:
 If you're not sure which to choose, start with `.scss` - it feels like regular CSS and doesn’t require learning the indented syntax ("Sass").
 
 1. **Install Sass**  
-   `npm install --save-dev sass`<br><br>   
+   ```
+   npm install --save-dev sass
+   ```
 
 2. **Customizing Sass Options**  
   - If you want to configure your Sass options use `sassOptions` in `next.config`.
@@ -1197,13 +1199,13 @@ If you're not sure which to choose, start with `.scss` - it feels like regular C
 
 #### Best Practices for Next.js Custom CSS/Sass Styles
 
-1.  Try to contain CSS imports to a **single JavaScript or TypeScript entry file**.
-2.  **Import global styles and Tailwind stylesheets in the root of your application.**
-    Global styles can be imported into any layout, page, or component inside the `app` directory. However, since Next.js uses React's built-in support for stylesheets to integrate with Suspense, this currently doesn't remove stylesheets as you navigate between routes, which can lead to conflicts. That's why it's recommended **to use global styles for truly global CSS, and CSS Modules for scoped CSS**. **It's also recommended to import global styles and Tailwind stylesheets in the root of your application.**
-3.  Extract shared styles into **shared components to avoid duplicate imports**.
-4.  For better maintainability and scalability, the following approach can be used:
-    * Use **Sass instead of just CSS** because Sass provides **many** benefits, such as the opportunity to create custom reusable variables and mixins.
-    * You can use the following example of a scalable structure:
+1.  Try to contain CSS imports to a **single JavaScript or TypeScript entry file**.  
+2.  **Import global styles and Tailwind stylesheets in the root of your application.**  
+    Global styles can be imported into any layout, page, or component inside the `app` directory. However, since Next.js uses React's built-in support for stylesheets to integrate with `Suspense`, this currently doesn't remove stylesheets as you navigate between routes, which can lead to conflicts. That's why it's recommended **to use global styles for truly global CSS, and CSS Modules for scoped CSS**. **It's also recommended to import global styles and Tailwind stylesheets in the root of your application.**
+3.  Extract shared styles into **shared components to avoid duplicate imports**.  
+4.  For better maintainability and scalability, the following approach can be used:  
+    - Use **Sass instead of just CSS** because Sass provides **many** benefits, such as the opportunity to create custom reusable variables and mixins.
+    - You can use the following example of a scalable structure:
         ```
         app/
         └── styles/
@@ -1213,7 +1215,7 @@ If you're not sure which to choose, start with `.scss` - it feels like regular C
             ├── theme.scss
             └── mixins.scss
         ```
-    * For each component, create its own module next to the component `.tsx` (or `.jsx`) file by appending `.module` next to the component name:
+    - For each component, create its own module next to the component `.tsx` (or `.jsx`) file by appending `.module` next to the component name:
         ```
         features/
         └── home/
@@ -1221,11 +1223,11 @@ If you're not sure which to choose, start with `.scss` - it feels like regular C
                 ├── About.tsx
                 └── About.module.scss
         ```
-    * Keep variables inside Sass modules with `camelCase` so that you can use a `styles.about` structure to access them because it's more user-friendly and offers the opportunity to leverage IDE autocomplete features.
-    * You can optionally use **BEM methodology** for naming components like `dashboard` for parent component, `dashboard__title`, `dashboard__NoteCard` for inner components, and `dashboard__NoteCard--active` for defining different states.
-5.  Turn off linters or formatters that auto-sort imports, like ESLint’s `sort-imports`.
+    - Keep variables inside Sass modules with `camelCase` so that you can use a `styles.about` structure to access them because it's more user-friendly and offers the opportunity to leverage IDE autocomplete features.
+    - You can optionally use **BEM methodology** for naming components like `dashboard` for parent component, `dashboard__title`, `dashboard__NoteCard` for inner components, and `dashboard__NoteCard--active` for defining different states.
+5.  Turn off linters or formatters that auto-sort imports, like ESLint’s `sort-imports`.  
     Next.js optimizes CSS during production builds by automatically chunking (merging) stylesheets. The order of your CSS depends on the order you import styles in your code.
-6.  You can use the `cssChunking` option in `next.config.js` to control how CSS is chunked.
+6.  You can use the `cssChunking` option in `next.config.js` to control how CSS is chunked.  
 
 
 ### Tailwind CSS
