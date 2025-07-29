@@ -299,7 +299,7 @@ In React, functional programming is reflected in patterns like:
 - **Partially applied components** – using closures to pre-apply props
 - **Component composition** – combining small, focused components to build complex UIs
 
-React’s functional nature leads to better **modularity**, **reusability**, and **testability** — key ingredients for scalable, maintainable apps.
+React’s functional nature leads to better **modularity**, **reusability**, and **testability** - key ingredients for scalable, maintainable apps.
 
 #### Recursive Components
 **Recursion** is a programming technique where a function calls itself to solve a problem by breaking it down into smaller, similar sub-problems.  
@@ -430,6 +430,201 @@ Example:
 
 
 ## State Management
+### [React Context](https://react.dev/reference/react/createContext)
+**React Context** is a built-in way to **share state or values globally** across your React app, without passing props down manually at every level, helping to avoid "prop drilling".
+
+### Basic Usage
+Below are the basic steps to create a shared context object:
+- `createContext()` creates a shared context object.
+- The Provider (`<ThemeContext.Provider>`) holds actual state.
+- `useContext()` allows access to the shared value.
+- Components using the context will automatically re-render when it changes.
+
+1. **Create a Context**
+
+```ts
+// ThemeContext.ts
+import { createContext } from 'react';
+
+export const ThemeContext = createContext({ theme: 'light', setTheme: () => {} });
+```
+
+2. **Provide Context in App**
+
+```tsx
+// App.tsx
+import React, { useState } from 'react';
+import { ThemeContext } from './ThemeContext';
+import ThemeSwitcher from './ThemeSwitcher';
+
+export default function App() {
+  const [theme, setTheme] = useState('light');
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <main className={theme}>
+        <h1>Welcome!</h1>
+        <ThemeSwitcher />
+      </main>
+    </ThemeContext.Provider>
+  );
+}
+```
+
+3. **Consume Context in Descendant**
+
+```tsx
+// ThemeSwitcher.tsx
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+export default function ThemeSwitcher() {
+  const { theme, setTheme } = useContext(ThemeContext);
+
+  return (
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Current: {theme} - Switch Theme
+    </button>
+  );
+}
+```
+
+### When to Use React Context
+**Use context when:**
+- Auth state needs to be shared globally
+- Theme switching (dark/light mode)
+- Language/localization
+- App-wide configuration or user data
+
+**Avoid for:**
+- High-frequency updates (e.g., mouse position)
+- Deep, isolated state (prefer Redux, Zustand, Mobx, etc.)
+
+
+### Using Multiple Contexts
+You can define **multiple contexts in React**. Just like in Angular where you have multiple services (`AuthService`, `ThemeService`, etc.) to separate concerns like theme, auth, cart, or feature toggles, in React you can create multiple contexts—each for a different concern.
+- You can create as many contexts as you need.
+- Each context can wrap only parts of the tree that need it.
+- This is very similar in spirit to Angular's multiple services architecture.
+
+Below are the steps to create multiple contexts:
+1. **Create Contexts**
+
+```ts
+// ThemeContext.ts
+export const ThemeContext = createContext({ theme: 'light', setTheme: () => {} });
+
+// AuthContext.ts
+export const AuthContext = createContext({ user: null, setUser: () => {} });
+```
+
+2. **Provide Them Separately**
+
+```tsx
+// App.tsx
+import { useState } from 'react';
+import { ThemeContext } from './ThemeContext';
+import { AuthContext } from './AuthContext';
+import AppContent from './AppContent';
+
+export default function App() {
+  const [theme, setTheme] = useState('light');
+  const [user, setUser] = useState({ name: 'Alice' });
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <AppContent />
+      </AuthContext.Provider>
+    </ThemeContext.Provider>
+  );
+}
+```
+
+3. **Consume Individually**
+
+```tsx
+// Header.tsx
+import { useContext } from 'react';
+import { AuthContext } from './AuthContext';
+
+export default function Header() {
+  const { user } = useContext(AuthContext);
+  return <p>Hello, {user.name}</p>;
+}
+```
+
+```tsx
+// ThemeSwitcher.tsx
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+export default function ThemeSwitcher() {
+  const { theme, setTheme } = useContext(ThemeContext);
+  return (
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Switch Theme
+    </button>
+  );
+}
+```
+
+## 🔒 Encapsulating Context Logic (Best Practice)
+By default, React Context values are just JavaScript objects, so any component consuming the context has access to everything inside - both state and any setter functions.
+But you can protect the context in a structured and idiomatic way by encapsulating logic inside the context provider.
+
+To avoid exposing raw `setState`, we can wrap context logic in custom hooks and expose controlled APIs. This solution provides the following benefits:
+- No direct access to `setUser`
+- All logic is centralized
+- Consistent and safe state updates
+
+### Example: AuthContext with Logic Encapsulation
+
+```tsx
+// AuthContext.tsx
+import { createContext, useState, useContext } from 'react';
+
+const AuthContext = createContext(null);
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  const login = (name: string) => setUser({ name });
+  const logout = () => setUser(null);
+  
+  // Not exposing setUser directly
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
+```
+
+### Components Using Safe API
+
+```tsx
+// LoginButton.tsx
+import { useAuth } from './AuthContext';
+
+export function LoginButton() {
+  const { login } = useAuth();
+  return <button onClick={() => login('Alice')}>Login</button>;
+}
+```
+
+```tsx
+// LogoutButton.tsx
+import { useAuth } from './AuthContext';
+
+export function LogoutButton() {
+  const { logout } = useAuth();
+  return <button onClick={logout}>Logout</button>;
+}
+```
+
 ### [React Redux Library](https://react-redux.js.org/introduction/getting-started)
 The official React UI bindings layer for [Redux](https://redux.js.org/tutorials/essentials/part-1-overview-concepts). It lets your React components read data from a Redux store, and dispatch actions to the store to update state.
 
@@ -437,7 +632,109 @@ The official React UI bindings layer for [Redux](https://redux.js.org/tutorials/
 A lightweight, fast, and scalable state management library with minimal boilerplate.
 - **Zustand** has a comfortable API based on hooks. 
 - It isn't boilerplate or opinionated, but has enough convention to be explicit and **flux-like**.
- 
+- It is a perfect choice for small to middle size projects.
+- In Next.js (with the App Router), any component that uses a Zustand store must include `"use client"` at the top, because Zustand relies on client-side React hooks like `useEffect`.
+
+Let's explore a small example of using a Zustand store in a **Next.js** project to fetch `notes` from an API, add a new note, and automatically update the UI when the store changes:
+- `AddNote` uses `addNote`, updates store
+- `NotesList` re-renders automatically when `notes` are updated, because Zustand triggers a re-render in any component that uses `notes` from the store.  
+  For example, when `addNote` is called in `AddNote` component, it updates the `notes` array, causing `NotesList` to re-render without any manual subscription logic.
+
+1. **Store (`store/notesStore.ts`)**  
+  Zustand store holds `notes`, `fetchNotes`, and `addNote`
+    ```ts
+    // store/notesStore.ts
+    import { create } from 'zustand';
+    
+    type Note = { id: number; text: string };
+    
+    type NotesState = {
+      notes: Note[];
+      fetchNotes: () => Promise<void>;
+      addNote: (note: Note) => void;
+    };
+    
+    export const useNotesStore = create<NotesState>((set) => ({
+      notes: [],
+      fetchNotes: async () => {
+        try {
+          const res = await fetch('/api/notes');
+          const data = await res.json();
+          set({ notes: data });
+        } catch (error) {
+          console.error('Failed to fetch notes', error);
+        }
+      },
+      addNote: (note) => set((state) => ({ notes: [...state.notes, note] })),
+    }));
+    ```
+
+2. **Component 1: Load Notes (`components/NotesList.tsx`)**  
+   - `fetchNotes` runs in `NotesList` once. `fetchNotes` is safe to use in the effect dependency because Zustand's function references are stable.
+   - `NotesList` re-renders automatically when a new note is added and notes update
+
+    ```tsx
+    // `components/NotesList.tsx`
+    'use client';
+    
+    import { useEffect } from 'react';
+    import { useNotesStore } from '../store/notesStore';
+    
+    export default function NotesList() {
+      const { notes, fetchNotes } = useNotesStore();
+      
+      useEffect(() => {
+        fetchNotes();
+      }, [fetchNotes]);
+    
+      return (
+        <ul>
+          {notes.map((note) => (
+            <li key={note.id}>{note.text}</li>
+          ))}
+        </ul>
+      );
+    }
+    ```
+
+3. **Component 2: Add Note (`components/AddNote.tsx`)**  
+    ```tsx
+    // components/AddNote.tsx
+    'use client';
+    
+    import { useNotesStore } from '../store/notesStore';
+    
+    export default function AddNote() {
+      const addNote = useNotesStore((s) => s.addNote);
+    
+      const handleAdd = () => {
+        const newNote = {
+          id: Date.now(),
+          text: 'New note',
+        };
+        addNote(newNote);
+      };
+    
+      return <button onClick={handleAdd}>Add Note</button>;
+    }
+    ``` 
+
+4. **App Layout Example (`app/page.tsx` or wherever you use the components)**
+    ```tsx
+    // app/page.tsx
+    import NotesList from './components/NotesList';
+    import AddNote from './components/AddNote';
+    
+    export default function Home() {
+      return (
+        <main>
+          <AddNote />
+          <NotesList />
+        </main>
+      );
+    }
+    ```
+
 ### [Mobx](https://mobx.js.org/README.html)
 **A signal based, battle-tested** library that makes state management simple and scalable by transparently applying functional reactive programming.   
 MobX uses `makeAutoObservable` to create reactive state, and `observer`(or `useObserver`) to make React components automatically re-render when observable data changes.
@@ -494,14 +791,15 @@ MobX uses `makeAutoObservable` to create reactive state, and `observer`(or `useO
 - It is React-specific state management with `atoms` and `selectors`
 - Feels like a natural extension of `useState` and `useContext`
 
-### Comparison of Different State Management Libraries 
+### Comparison of Different State Management Libraries (Tools) 
 
-| Library                                                                    | Command                                     | Popularity | Best For                                                  | Pros                                                                   | Cons                                                             |
-|----------------------------------------------------------------------------|---------------------------------------------|------------|-----------------------------------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------|
-| [**Zustand**](https://zustand.docs.pmnd.rs/getting-started/introduction)   | `npm install zustand`                       | Rising     | Lightweight apps, fast prototypes, modern stacks          | Minimal boilerplate, tiny bundle, great dev experience, React-friendly | Less built-in structure, no middleware out of the box            |
-| [**Redux**](https://react-redux.js.org/introduction/getting-started)       | `npm install @reduxjs/toolkit react-redux`  | Mature     | Large-scale enterprise apps, legacy codebases             | Ecosystem rich, devtools, clear architecture, time-travel debugging    | Verbose, requires boilerplate (though Redux Toolkit helps a lot) |
-| [**MobX**](https://mobx.js.org/README.html)                                | `npm install mobx mobx-react-lite`          | Balanced   | Complex UI apps, reactive data flows                      | Fine-grained reactivity, intuitive, OOP-style                          | Too implicit, harder to debug at scale                           |
-| [**Recoil**](https://recoiljs.org/docs/introduction/core-concepts)         | `npm install recoil`                        | Niche      | React-first apps needing derived state & Suspense support | Hooks-based, derived state with selectors, concurrent-mode friendly    | Less community adoption, limited ecosystem                       |
+| Library                                                                     | Command                                     | Popularity | Best For                                                  | Pros                                                                   | Cons                                                             |
+|------------------------------------------------------------------------------|--------------------------------------------|------------|-----------------------------------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------|
+| [**React Context**](https://react.dev/learn/passing-data-deeply-with-context) | Built-in                                  | Built-in   | Global state in small to medium apps                      | Native to React, no extra packages, great for static or config values  | Prop drilling avoidance only can lead to re-renders, boilerplate |
+| [**Zustand**](https://zustand.docs.pmnd.rs/getting-started/introduction)    | `npm install zustand`                       | Rising     | Lightweight apps, fast prototypes, modern stacks          | Minimal boilerplate, tiny bundle, great dev experience, React-friendly | Less built-in structure, no middleware out of the box            |
+| [**Redux**](https://react-redux.js.org/introduction/getting-started)        | `npm install @reduxjs/toolkit react-redux`  | Mature     | Large-scale enterprise apps, legacy codebases             | Ecosystem rich, devtools, clear architecture, time-travel debugging    | Verbose, requires boilerplate (though Redux Toolkit helps a lot) |
+| [**MobX**](https://mobx.js.org/README.html)                                 | `npm install mobx mobx-react-lite`          | Balanced   | Complex UI apps, reactive data flows                      | Fine-grained reactivity, intuitive, OOP-style                          | Too implicit, harder to debug at scale                           |
+| [**Recoil**](https://recoiljs.org/docs/introduction/core-concepts)          | `npm install recoil`                        | Niche      | React-first apps needing derived state & Suspense support | Hooks-based, derived state with selectors, concurrent-mode friendly    | Less community adoption, limited ecosystem                       |
 
 ## Form Manipulation
 
@@ -582,16 +880,354 @@ Server can specify validation rules, client can retrieve them when receiving dat
 
 
 ## Data Fetching and API Manipulation
+The common way to work with data fetching in React projects is by using the native `fetch` API or libraries like **Axios**.  
+However, for **larger projects** and **greater flexibility** when dealing with **server state**, tools like **React Query** are often preferred. They offer features like **caching**, **background updates**, and **request deduplication** out of the box.
+
+### Fetch
+
+The built-in browser API for making HTTP requests. It's simple and native but doesn't include features like request cancellation, interceptors, or automatic JSON parsing.
+
+**Example:**
+
+```tsx
+import React, { useState, useEffect } from 'react';
+
+function MyComponent() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://api.example.com/data')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures it runs only once on mount
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+          <div>
+            <h1>Data:</h1>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+          </div>
+  );
+}
+
+export default MyComponent;
+```
+
+### Axios
+A popular promise-based HTTP client that works both in the browser and in Node.js. Axios offers automatic JSON transformation, interceptors, and request cancellation, which makes it more convenient for complex applications.
+- **Install**
+```
+npm install axios
+```
+
+- **Example:**
+```tsx
+import axios from 'axios';
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://api.example.com/data');
+      setData(response.data);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []); // Empty dependency array ensures this runs once on mount
+```
+
+### [React Suspense](https://react.dev/reference/react/Suspense)
+React Suspense  is a built-in feature in React that allows you to "suspend" the rendering of a component until certain asynchronous operations, like data fetching or lazy-loading components, are complete. While the component is suspended, React displays a fallback UI.
+Basically, it allows components to **wait** for something before rendering.
+
+Only Suspense-enabled data sources will activate the Suspense component. They include:
+
+#### 1. Lazy-loading component code with `lazy`
+This is the most common and straightforward use case for Suspense.
+- `React.lazy():` This function takes a function that returns a dynamic `import()` call. The component will only be loaded when it's rendered.
+- `<Suspense fallback={...}>`: This component wraps the lazy-loaded component. The fallback prop specifies the UI to display while the LazyComponent is loading.
+
+```tsx
+import React, { Suspense, lazy } from 'react';
+
+// Create a lazy-loaded component
+const LazyComponent = lazy(() => import('./LazyComponent'));
+
+function App() {
+  return (
+    <div>
+      <h1>My App</h1>
+      <Suspense fallback={<div>Loading Lazy Component...</div>}>
+        <LazyComponent />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+#### 2. Data fetching with Suspense-enabled libraries (React Query) and frameworks (Relay and Next.js)
+While you can technically implement Suspense for data fetching manually by throwing a Promise, it's generally recommended to use libraries designed to integrate with Suspense, such as:
+- **React Query**: A popular library for data fetching and caching with excellent `Suspense` support.
+- **SWR**: Another powerful data fetching library with built-in `Suspense` integration.
+
+**Example**   
+When using a Suspense-enabled data fetching library, you often enable Suspense mode through a specific option in the hook or configuration, such as `suspense: true`. This tells the library to throw a `Promise` when data is not ready, allowing Suspense to catch it.
+```tsx
+import React, { Suspense } from 'react';
+import { useQuery } from '@tanstack/react-query'; // Assuming React Query is installed
+
+function MyDataComponent() {
+  const { data } = useQuery({ queryKey: ['myData'], queryFn: fetchData, suspense: true });
+  // 'data' will only be available when the query is resolved,
+  // otherwise Suspense will handle the loading state.
+  return <div>{data}</div>;
+}
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading Data...</div>}>
+      <MyDataComponent />
+    </Suspense>
+  );
+}
+```
+
+#### 3. Reading the value of a cached Promise with `use` Hook
+In React, the `use` Hook allows reading the value of a resource like a `Promise` directly within a component. This hook is designed to work with Suspense, enabling components to "suspend" rendering while waiting for data to resolve.  
+In order to read a cached Promise value with `use`, the following steps should be performed:
+- **Cache the `Promise`:**
+  First, ensure your Promise is cached. This can be done using a custom caching mechanism (e.g., a Map or an LRU cache) or React's built-in cache API, if applicable to your use case. The key is that subsequent requests for the same data return the same Promise instance, not a new one.
+- **Use the `use` Hook:**
+  Within your React component, call the use hook and pass the cached Promise as its argument.
+
+**Example**
+```tsx
+    import { use } from 'react';
+
+    // Assume `fetchDataPromise` is a function that returns a cached Promise
+    // for a given ID. This promise is guaranteed to be the same instance
+    // for the same ID.
+    function MyComponent({ id }) {
+      const data = use(fetchDataPromise(id)); // Pass the cached Promise
+
+      return (
+        <div>
+          {/* Render your data here */}
+          <p>{data.someProperty}</p>
+        </div>
+      );
+    }
+```
+
 ### [Drizzle](https://www.linkedin.com/advice/3/how-can-you-effectively-use-drizzle-manage-state-your#:~:text=Drizzle%20is%20a%20collection%20of,transactions%2C%20and%20generating%20contract%20events.)
   - **Drizzle** is a **collection of libraries and tools** that simplify the development of dApps using React. 
   - **Drizzle** helps you connect your React components to your **smart contracts**, and **automatically updates the state when there are changes** in the blockchain or the user actions. 
   - **Drizzle** also provides some useful features, such as **caching contract data**, **handling transactions**, and **generating contract events**.
+
 ### [React Query (TanStack Query)](https://tanstack.com/query/latest/docs/framework/react/overview) 
   A primarily a **server state management library**, focused on handling the asynchronous lifecycle of **fetching**, **caching**, **updating**, and **syncing** remote **API data**.
-### [React Suspense](https://react.dev/reference/react/Suspense)   
-  A built-in feature in React that allows components to **wait** for something before rendering.
+
 
 ## Styling
+### Next.js Custom CSS/Sass Styles
+If you prefer having your own custom styles in Next.js, the framework provides several ways to style your application using CSS, including:
+- **CSS Modules**
+- **Global CSS**
+- **External Stylesheets**
+- **Tailwind CSS**
+- **Sass**
+- **CSS-in-JS**
+
+#### CSS Modules
+According to [the repo](https://github.com/css-modules/css-modules), CSS modules are:
+"CSS files in which all class names and animation names are scoped locally by default."
+  - CSS Modules are **not an official spec or an implementation in the browser** but rather a process in a build step (with the help of **Webpack** or **Browserify**) that changes class names and selectors to be scoped (i.e. kinda like namespaced).
+  - CSS Modules locally scope CSS by generating unique class names. This allows you to use the same class in different files without worrying about naming collisions.
+
+Below are steps to start using CSS modules:
+1. Create a new file with the extension `.module.css` and import it into any component inside the app directory:
+    ```css
+    /* src\features\home\About\About.module.scss */ 
+   .about {
+      font-size: 1.6rem;
+    }
+    ```
+2. Then import it as `styles` in the component and use via these two approaches:
+   - `className={styles.about}`  
+    If you are using camelCase - a style compatible with Javascript object keys, you can always use this approach.
+   - `className={styles['about']}`  
+    Otherwise, if you are using other style like **kebab-case** which are not compatible with JavaScript key naming conventions, you have to stick with this approach.` <br/><br/>
+
+   Alternatively, you can also compile multiple classes together like: ```className={`${styles.about} mb-md`}```
+
+    ```tsx
+    import styles from './About.module.scss';
+    
+    export default function About() {
+      return (
+        <section className={styles.about}><!--Some Content--></section>
+      );
+    }
+    ```
+
+3. This is how it will look like in browser, after compilation:
+
+    ![Compiled CSS Modules in the Browser](../../_assets/css-modules-compiled-example.PNG)
+
+#### Global CSS
+You can use global CSS to apply styles across your application.
+Create an `app/global.css` (or create dedicated folder for better maintainability: `app/styles/global.css`) file and import it in the root layout to apply the styles to every route in your application:
+
+```css
+/* app/global.css */
+body {
+  padding: 20px 20px 60px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+```
+
+```tsx
+/* app/layout.tsx */
+// These styles apply to every route in the application
+import './global.css'
+ 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+#### External Stylesheets
+Stylesheets published by external packages can be imported anywhere in the app directory, including inside component folders where styles and logic are grouped together (i.e. colocated).
+
+```tsx
+import 'bootstrap/dist/css/bootstrap.css'
+ 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className="container">{children}</body>
+    </html>
+  )
+}
+```
+
+#### Sass
+Next.js has built-in support for integrating with Sass after the package is installed using both the `.scss` and `.sass` extensions. You can use component-level Sass via **CSS Modules** and the `.module.scss` or `.module.sass` extension.
+
+Sass supports two different syntaxes, each with their own extension:
+- **.scss extension:** uses the SCSS syntax, a superset of CSS.
+- **.sass extension:** requires you to use the Indented Syntax (`Sass`).
+
+If you're not sure which to choose, start with `.scss` - it feels like regular CSS and doesn’t require learning the indented syntax ("Sass").
+
+1. **Install Sass**  
+   `npm install --save-dev sass`<br><br>   
+
+2. **Customizing Sass Options**  
+  - If you want to configure your Sass options use `sassOptions` in `next.config`.
+  - You can use the implementation property to specify the Sass implementation to use. By default, Next.js uses the sass package.
+
+      ```
+      import type { NextConfig } from 'next'
+       
+      const nextConfig: NextConfig = {
+        sassOptions: {
+          additionalData: `$var: red;`,
+          implementation: 'sass-embedded',
+        },
+      }
+       
+      export default nextConfig
+      ```
+
+3. **Sass Variables**  
+    Next.js supports Sass variables exported from CSS Module files.
+
+    For example, using the exported `primaryColor` `Sass` variable:
+
+    ```scss
+    /* app/styles/variables.module.scss */
+    $primary-color: #64ff00;
+     
+    :export {
+      primaryColor: $primary-color;
+    }
+    ```
+    ```tsx
+    /* app/page.tsx */
+    // maps to root `/` URL
+    import variables from './variables.module.scss'
+     
+    export default function Page() {
+      return <h1 style={{ color: variables.primaryColor }}>Hello, Next.js!</h1>
+    }
+    ```
+
+#### Best Practices for Next.js Custom CSS/Sass Styles
+
+1.  Try to contain CSS imports to a **single JavaScript or TypeScript entry file**.
+2.  **Import global styles and Tailwind stylesheets in the root of your application.**
+    Global styles can be imported into any layout, page, or component inside the `app` directory. However, since Next.js uses React's built-in support for stylesheets to integrate with Suspense, this currently doesn't remove stylesheets as you navigate between routes, which can lead to conflicts. That's why it's recommended **to use global styles for truly global CSS, and CSS Modules for scoped CSS**. **It's also recommended to import global styles and Tailwind stylesheets in the root of your application.**
+3.  Extract shared styles into **shared components to avoid duplicate imports**.
+4.  For better maintainability and scalability, the following approach can be used:
+    * Use **Sass instead of just CSS** because Sass provides **many** benefits, such as the opportunity to create custom reusable variables and mixins.
+    * You can use the following example of a scalable structure:
+        ```
+        app/
+        └── styles/
+            ├── global.scss
+            ├── helpers.scss
+            ├── variables.scss
+            ├── theme.scss
+            └── mixins.scss
+        ```
+    * For each component, create its own module next to the component `.tsx` (or `.jsx`) file by appending `.module` next to the component name:
+        ```
+        features/
+        └── home/
+            └── About/
+                ├── About.tsx
+                └── About.module.scss
+        ```
+    * Keep variables inside Sass modules with `camelCase` so that you can use a `styles.about` structure to access them because it's more user-friendly and offers the opportunity to leverage IDE autocomplete features.
+    * You can optionally use **BEM methodology** for naming components like `dashboard` for parent component, `dashboard__title`, `dashboard__NoteCard` for inner components, and `dashboard__NoteCard--active` for defining different states.
+5.  Turn off linters or formatters that auto-sort imports, like ESLint’s `sort-imports`.
+    Next.js optimizes CSS during production builds by automatically chunking (merging) stylesheets. The order of your CSS depends on the order you import styles in your code.
+6.  You can use the `cssChunking` option in `next.config.js` to control how CSS is chunked.
+
+
 ### Tailwind CSS
 **Tailwind CSS** is an **atomic** (utility-first) CSS framework, which differs from traditional component-based styling approaches like Bootstrap.
 Instead of pre-designed components, **Tailwind** provides **low-level utility classes** for individual CSS rules (e.g., `p-4`, `text-center`, `bg-blue-500`), allowing developers to compose complex styles directly in the `HTML` or `JSX`. 
@@ -665,12 +1301,12 @@ export default MyComponent;
 
 #### CSS-in-JS Tools Libraries Comparison
 
-| Library                                                                            | Pros                                                                                                       | Cons                                                                     | Community Adoption | Status              |
-|------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------|---------------------|
-| [**Styled Components**](https://styled-components.com/docs/basics#installation)    | Very popular and widely used, familiar syntax, great ecosystem & docs                                      | Runtime style injection, can increase bundle size and mount-time latency | Very high          | Actively maintained |
-| [**Emotion**](https://www.npmjs.com/package/@emotion/react)                        | Lightweight, flexible (supports both string and object styles), good TypeScript support, used by Chakra UI | Runtime style injection, can become messy in large projects              | High               | Actively maintained |
-| [**Stitches**](https://stitches.dev/docs/installation)                             | Compile-time CSS (no runtime injection), great TS support, fast & modern API                               | Smaller ecosystem, slight learning curve for variants/theming            | Growing            | Actively maintained |
-| [**Vanilla Extract**](https://vanilla-extract.style/documentation/getting-started) | Fully type-safe, build-time CSS generation, excellent for monorepos                                        | Requires custom build setup, not as beginner-friendly                    | Niche/TS-heavy     | Actively maintained |
+| Library                                                                                | Pros                                                                                                       | Cons                                                                     | Community Adoption | Status              |
+|----------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------|---------------------|
+| [**Styled Components**](https://styled-components.com/docs/basics#installation)        | Very popular and widely used, familiar syntax, great ecosystem & docs                                      | Runtime style injection, can increase bundle size and mount-time latency | Very high          | Actively maintained |
+| [**Emotion**](https://www.npmjs.com/package/@emotion/react)                            | Lightweight, flexible (supports both string and object styles), good TypeScript support, used by Chakra UI | Runtime style injection, can become messy in large projects              | High               | Actively maintained |
+| [**Stitches**](https://stitches.dev/docs/installation)                                 | Compile-time CSS (no runtime injection), great TS support, fast & modern API                               | Smaller ecosystem, slight learning curve for variants/theming            | Growing            | Actively maintained |
+| [**Vanilla Extract**](https://vanilla-extract.style/documentation/getting-started)     | Fully type-safe, build-time CSS generation, excellent for monorepos                                        | Requires custom build setup, not as beginner-friendly                    | Niche/TS-heavy     | Actively maintained |
 
 
 ## Linting
@@ -758,18 +1394,29 @@ Vercel is a popular platform for deploying and hosting React applications and ma
 
 
 ## Documentation and References
+### Best Practices for Building Scalable, Maintainable and Testable React Code
+- [React Reference Overview](https://react.dev/reference/react)
+
 ### React Build Tools and Frameworks
 **Build your Web Framework from Scratch** - Presentation by [Yusuke Wada](https://github.com/yusukebe) at React Summit, June 2025 
+
 ### Project Structure and Naming Conventions
 - [React folder structure in 5 steps, 2025](https://www.robinwieruch.de/react-folder-structure/) by [Robin Wieruch](https://www.linkedin.com/in/robin-wieruch-971933a6/)
 - [Folder Structure for React JS Project](https://www.geeksforgeeks.org/reactjs/folder-structure-for-a-react-js-project/)
+
+### Styling
+- [Next.js: Custom Styling with CSS](https://nextjs.org/docs/app/getting-started/css)
+- [Next.js: Integration with Sass](https://nextjs.org/docs/app/guides/sass)
+
 ### Linting
 - [Rules of React](https://react.dev/reference/rules)
 - [React Official Editor Setup](https://react.dev/learn/editor-setup#linting)
+
 ### Design Patterns
 - [Sharing State Between Components](https://react.dev/learn/sharing-state-between-components)
 - [React: Design Patterns](https://www.linkedin.com/learning/react-design-patterns-25656257) by [Shaun Wassell](https://www.linkedin.com/in/shaun-wassell), Linkedin Learning
 - **Prioritizing Architecture over Framework in Web Development** - Presentation by [Alexandre Rivest](https://www.linkedin.com/in/alexandre-rivest-25a026a6/) at React Summit, June 2025
+
 ### Form Manipulation
 - **Validating the Web: The Evolution of Form Validation** by [Luis Oliveira](https://www.linkedin.com/in/luis-oliveira-tech) at React Summit, June 2025.
 
