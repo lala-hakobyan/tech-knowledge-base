@@ -671,7 +671,7 @@ Let's explore a small example of using a Zustand store in a **Next.js** project 
 
 2. **Component 1: Load Notes (`components/NotesList.tsx`)**  
    - `fetchNotes` runs in `NotesList` once. `fetchNotes` is safe to use in the effect dependency because Zustand's function references are stable.
-   - `NotesList` re-renders automatically when a new note is added and notes update<br><br>
+   - `NotesList` re-renders automatically when a new note is added and notes update<br>
 
     ```tsx
     // `components/NotesList.tsx`
