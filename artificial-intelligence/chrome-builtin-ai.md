@@ -73,6 +73,7 @@ Below are steps to enable and test Chrome Built-in APIs:
 
 ## Documentation & References
 - [Official Google Documentation for Built-in APIs](https://developer.chrome.com/docs/ai/built-in-apis)
+- [AI with Chrome](https://developer.chrome.com/docs/ai/)
 - [The Early Preview Program for Google Built-in AI APIs](https://developer.chrome.com/docs/ai/join-epp)
   - [Public Discussion Mailing List](https://groups.google.com/a/chromium.org/g/chrome-ai-dev-preview-discuss?pli=1)
   - [Google Developer Community on Discord](https://discord.com/invite/zzj2ywFx8B)

@@ -323,6 +323,96 @@ For example, separating `Card` component into `CardHeader`, `CardBody` and `Card
 #### Partial Application
 **Partial application** is when we take a certain number of arguments in a function and fix them to specific values. And that helps to create a more specific version of a more generic function.
 
+#### Compound Components
+The **Compound Components** pattern is a React design pattern that allows a parent component to coordinate behavior among multiple subcomponents, making the API more declarative and flexible for the consumer.  
+Components are designed to work together by using **implicit state sharing** and **composition**, instead of prop drilling or context passing by the user.<br>
+
+- **Example**  
+Below is an example of modal:
+  - Modal provides the internal logic and layout
+  - `Modal.Header`, `Modal.Header`, and `Modal.Footer` are compound components that are attached to the main component statically (e.g., using Object.assign)
+
+    ```tsx
+    // Setup in Modal.tsx
+    const extractModalContent = (children: ReactNode): ModalContent => {
+        let modalBody: ReactNode = null;
+        let modalFooter: ReactNode = null;
+        let modalHeader: ReactNode = null;
+    
+        Children.forEach((children), (child) => {
+            if (React.isValidElement(child)) {
+                const element = child as ReactElement;
+    
+                if (element.type === Modal.Header) {
+                    modalHeader = element;
+                }
+                if (element.type === Modal.Body) {
+                    modalBody = element;
+                }
+                if (element.type === Modal.Footer) {
+                    modalFooter = element;
+                }
+            }
+        })
+    } 
+    
+    const ModalRoot = ({ children, isOpen, onClosed }: ModalProps) => {
+      const { modalHeader, modalBody, modalFooter } = extractModalContent(children);
+    
+      return (
+        <div className={isOpen ? 'modal active' : 'modal'}>
+          <div className="modal__content">
+            <div className="modal__header">{modalHeader}</div>
+            <div className="modal__body">{modalBody}</div>
+            <div className="modal__footer">{modalFooter}</div>
+          </div>
+        </div>
+      );
+    };
+    
+    const Header = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+    const Body = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+    const Footer = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+    
+    export const Modal = Object.assign(ModalRoot, {
+      Header,
+      Body,
+      Footer,
+    });
+    ```
+    ```tsx
+    <!-- Usage in AddNote.tsx -->
+    <Modal isOpen={true} onClosed={handleClose}>
+      <Modal.Header>Modal Title</Modal.Header>
+      <Modal.Body>Some content goes here</Modal.Body>
+      <Modal.Footer>
+        <button onClick={handleClose}>Close</button>
+      </Modal.Footer>
+    </Modal>
+    ```
+- **Advantages**  
+  - Keeps API intuitive and declarative 
+  - Enables powerful layouts with clean composition 
+  - Avoids unnecessary prop-drilling 
+  - Encourages a single responsibility for layout vs. content<br><br>
+
+- **Real Use Cases**    
+This pattern is very useful for creating flexible UI components. That is the reason that this pattern is popular in component libraries and design systems like:
+  - Chakra UI – e.g., `<Tabs><Tabs.List><Tabs.Trigger>...</Tabs.Trigger></Tabs.List></Tabs>`
+  - Radix UI – e.g., `<Dialog><Dialog.Trigger/><Dialog.Content/><Dialog.Close/></Dialog>`
+  - Headless UI – similar component composition for modals, tabs, and menus
+  - Reakit – compound components for accessible UI patterns<br><br>
+
+- **When to Use?**   
+   Use compound components when:
+  - You want the consumer to compose UI flexibly 
+  - The parent should control layout and state 
+  - You’re building a custom modal, form wizard, tabs, or similar coordinated UI block<br>
+  
+  Avoid if:
+  - Your use case is too simple and doesn't need multiple parts 
+  - State needs to flow independently between children
+
 ### Business Logic Encapsulation + Dependency Injection 
 This is a very useful and interesting pattern combination to use in React. This pattern allows to create testable, maintainable and scalable code.
 - If there is any specific business logic, we separate it from React and UI. We can place it in domain folder following **DDD(Domain Driven Architecture)** patten.
@@ -411,22 +501,24 @@ Example:
   | **Dependency Injection**           | The `Cart` instance is injected via context, not created within the component. |
   | **Inversion of Control (IoC)**     | The component depends on an external context to provide dependencies.          |
 
+
 ### Summary of Design Patterns
-| Pattern                                | Popularity         | Notes                                                                                |
-|----------------------------------------|--------------------|--------------------------------------------------------------------------------------|
-| Layout Components                      | ✅ Common          | Used for composing flexible layouts (SplitView, SidebarLayout, etc.)                 |
-| Container-Presentational Pattern       | ✅ Classic         | Still relevant, though custom hooks now often replace containers                     |
-| Controlled vs Uncontrolled Components  | ✅ Core Concept    | Controlled preferred for testability; uncontrolled used for simpler or native forms  |
-| Higher Order Components (HOC)          | ⚠️ Declining       | Replaced by hooks in most new code; still seen in some libraries (e.g. `connect`)    |
-| Custom Hooks                           | ✅ Very Popular    | Go-to pattern for logic reuse in modern React                                        |
-| Functional Programming Patterns        | ✅ Core Design     | Encouraged by React team; clean, reusable, and testable code                         |
-| Recursive Components                   | ⚠️ Niche           | Used when rendering nested tree-like structures (e.g. menus, comments, folders)      |
-| Component Composition                  | ✅ Fundamental     | The key to React’s philosophy - "Composition over Inheritance"                       |
-| Partial Application (Components)       | ⚠️ Advanced        | Useful for pre-configuring component props in complex UIs                            |
-| Business Logic Encapsulation           | ✅ Best Practice   | Critical for separating concerns and enabling testing and scalability                |
-| Dependency Injection (via Context)     | ✅ Common          | Widely used to inject services or data (e.g., theme, auth, cart state)               |
-| Factory Methods                        | ⚠️ Advanced        | Seen in domain modeling or service instantiation scenarios                           |
-| Inversion of Control (IoC)             | ⚠️ Advanced        | Tied to DI; aligns with modern scalable architecture practices                       |
+| Pattern                                | Popularity         | Notes                                                                                                                                                                |
+|----------------------------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Layout Components                      | ✅ Common          | Used for composing flexible layouts (SplitView, SidebarLayout, etc.)                                                                                                 |
+| Container-Presentational Pattern       | ✅ Classic         | Still relevant, though custom hooks now often replace containers                                                                                                     |
+| Controlled vs Uncontrolled Components  | ✅ Core Concept    | Controlled preferred for testability; uncontrolled used for simpler or native forms                                                                                  |
+| Higher Order Components (HOC)          | ⚠️ Declining       | Replaced by hooks in most new code; still seen in some libraries (e.g. `connect`)                                                                                    |
+| Custom Hooks                           | ✅ Very Popular    | Go-to pattern for logic reuse in modern React                                                                                                                        |
+| Functional Programming Patterns        | ✅ Core Design     | Encouraged by React team; clean, reusable, and testable code                                                                                                         |
+| Recursive Components                   | ⚠️ Niche           | Used when rendering nested tree-like structures (e.g. menus, comments, folders)                                                                                      |
+| Component Composition                  | ✅ Fundamental     | The key to React’s philosophy - "Composition over Inheritance"                                                                                                       |
+| Partial Application (Components)       | ⚠️ Advanced        | Useful for pre-configuring component props in complex UIs                                                                                                            |
+| Compound Components Pattern            | ✅ Common          | Enables implicit communication between parent and statically attached UI child components. Used in Chakra UI, Radix, Headless UI for patterns like Modal, Tabs, etc. |
+| Business Logic Encapsulation           | ✅ Best Practice   | Critical for separating concerns and enabling testing and scalability                                                                                                |
+| Dependency Injection (via Context)     | ✅ Common          | Widely used to inject services or data (e.g., theme, auth, cart state)                                                                                               |
+| Factory Methods                        | ⚠️ Advanced        | Seen in domain modeling or service instantiation scenarios                                                                                                           |
+| Inversion of Control (IoC)             | ⚠️ Advanced        | Tied to DI; aligns with modern scalable architecture practices                                                                                                       |
 
 
 ## State Management
@@ -817,14 +909,14 @@ export default function ControlledForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Name:
+      <div>
+        <label>Name:</label>
         <input 
           type="text" 
           value={name} 
           onChange={(e) => setName(e.target.value)} 
         />
-      </label>
+      </div>
       <button type="submit">Submit</button>
     </form>
   );
@@ -843,13 +935,13 @@ export default function UncontrolledForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Name:
+      <div>
+        <label>Name:</label>
         <input 
           type="text" 
           ref={nameRef} 
         />
-      </label>
+      </div>
       <button type="submit">Submit</button>
     </form>
   );
