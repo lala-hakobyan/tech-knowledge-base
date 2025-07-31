@@ -2283,7 +2283,7 @@ In your `app.component.ts`.
 - [Angular Real World App Example](https://github.com/gothinkster/angular-realworld-example-app) by [Gérôme Grignon](https://www.linkedin.com/in/gerome-grignon/) 
 - [Modern Architecture](https://github.com/manfredsteyer/modern-arc) by [Manfred Steyer](https://www.linkedin.com/in/manfred-steyer-84645821/)
 - [Admin template based on Angular and Nebular](https://github.com/akveo/ngx-admin)
-- [ngOptimizedImage-examples](https://github.com/sonukapoor/ngOptimizedImage-examples) by (Sonu Kapoor)[https://www.linkedin.com/in/sonu-kapoor/](Google Developer Expert)
+- [ngOptimizedImage-examples](https://github.com/sonukapoor/ngOptimizedImage-examples) by [Sonu Kapoor](https://www.linkedin.com/in/sonu-kapoor/)(Google Developer Expert)   
 Educational repo for demonstrating how to enhance Performance and User Experience in Angular through `ngOptimizedImage` directive.
 
 
@@ -2311,7 +2311,7 @@ Educational repo for demonstrating how to enhance Performance and User Experienc
 - [Angular v20+ Folder Structure Guide: Best Practices for Scalable Apps](https://www.angular.courses/blog/angular-folder-structure-guide) by [Gérôme Grignon](https://www.linkedin.com/in/gerome-grignon/)
 - [The Ultimate Guide to Angular Evolution](https://houseofangular.io/the-ultimate-guide-to-angular-evolution/)   
   Discover how the latest Angular 20 version improves performance, DX, UX, and overall app efficiency, and how it affects your business.
-- [Introduction to NgOptimizedImage: Enhancing Performance and UX in Angular](https://www.youtube.com/watch?v=M_Rihr8zRnQ) by (Sonu Kapoor)[https://www.linkedin.com/in/sonu-kapoor/](Google Developer Expert)
+- [Introduction to NgOptimizedImage: Enhancing Performance and UX in Angular](https://www.youtube.com/watch?v=M_Rihr8zRnQ) by [Sonu Kapoor](https://www.linkedin.com/in/sonu-kapoor/)(Google Developer Expert)
 
 ### Design Patterns
 - [Angular Signals](https://angular.dev/guide/signals)
