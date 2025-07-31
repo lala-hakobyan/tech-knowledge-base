@@ -2283,6 +2283,8 @@ In your `app.component.ts`.
 - [Angular Real World App Example](https://github.com/gothinkster/angular-realworld-example-app) by [Gérôme Grignon](https://www.linkedin.com/in/gerome-grignon/) 
 - [Modern Architecture](https://github.com/manfredsteyer/modern-arc) by [Manfred Steyer](https://www.linkedin.com/in/manfred-steyer-84645821/)
 - [Admin template based on Angular and Nebular](https://github.com/akveo/ngx-admin)
+- [ngOptimizedImage-examples](https://github.com/sonukapoor/ngOptimizedImage-examples) by (Sonu Kapoor)[https://www.linkedin.com/in/sonu-kapoor/](Google Developer Expert)
+Educational repo for demonstrating how to enhance Performance and User Experience in Angular through `ngOptimizedImage` directive.
 
 
 
