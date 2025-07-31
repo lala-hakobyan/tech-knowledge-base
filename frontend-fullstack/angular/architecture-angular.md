@@ -2309,8 +2309,9 @@ Educational repo for demonstrating how to enhance Performance and User Experienc
 - [Announcing Angular v20](https://blog.angular.dev/announcing-angular-v20-b5c9c06cf301) by [Minko Gechev](https://www.linkedin.com/in/mgechev/)
 - [Angular v20+ Folder Structure Guide: Best Practices for Scalable Apps](https://www.angular.courses/blog/angular-folder-structure-guide)
 - [Angular v20+ Folder Structure Guide: Best Practices for Scalable Apps](https://www.angular.courses/blog/angular-folder-structure-guide) by [Gérôme Grignon](https://www.linkedin.com/in/gerome-grignon/)
-- [The Ultimate Guide to Angular Evolution](https://houseofangular.io/the-ultimate-guide-to-angular-evolution/)
+- [The Ultimate Guide to Angular Evolution](https://houseofangular.io/the-ultimate-guide-to-angular-evolution/)   
   Discover how the latest Angular 20 version improves performance, DX, UX, and overall app efficiency, and how it affects your business.
+- [Introduction to NgOptimizedImage: Enhancing Performance and UX in Angular](https://www.youtube.com/watch?v=M_Rihr8zRnQ) by (Sonu Kapoor)[https://www.linkedin.com/in/sonu-kapoor/](Google Developer Expert)
 
 ### Design Patterns
 - [Angular Signals](https://angular.dev/guide/signals)
