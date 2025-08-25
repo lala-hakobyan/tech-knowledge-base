@@ -1492,7 +1492,8 @@ Vercel is a popular platform for deploying and hosting React applications and ma
 - [React Reference Overview](https://react.dev/reference/react)
 
 ### React Build Tools and Frameworks
-**Build your Web Framework from Scratch** - Presentation by [Yusuke Wada](https://github.com/yusukebe) at React Summit, June 2025 
+- **Build your Web Framework from Scratch** - Presentation by [Yusuke Wada](https://github.com/yusukebe) at React Summit, June 2025 
+- **Next.js HMR issues and how to address them** - [https://www.youtube.com/watch?v=0m1NGdOZpsI]
 
 ### Project Structure and Naming Conventions
 - [React folder structure in 5 steps, 2025](https://www.robinwieruch.de/react-folder-structure/) by [Robin Wieruch](https://www.linkedin.com/in/robin-wieruch-971933a6/)
