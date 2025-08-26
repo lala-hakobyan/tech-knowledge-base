@@ -39,9 +39,9 @@ const posts = [
 If `Jane` changes her username, it must be updated in `post1.author`, `comment2.author`, and everywhere else she appears.
 
 That means:
-- Duplication (same user stored in multiple places)
-- Complex updates (deeply nested reducers)
-- Performance issues (small updates may cause big re-renders)
+- **Duplication** - same user stored in multiple places
+- **Complex updates** - deeply nested reducers
+- **Performance issues** - small updates may cause big re-renders
 
 ### The Solution with Normalized State ✅
 Instead of storing hierarchical data, store each entity separately.  
@@ -82,9 +82,9 @@ const normalizedState = {
 ```
 
 ### Advantages of Using Normalized State
-- Single source of truth – no duplication
-- Simpler updates – reducers are flatter and easier
-- Better performance – fewer unnecessary re-renders
+- **Single source of truth** - no duplication
+- **Simpler updates** - reducers are flatter and easier
+- **Better performance** - fewer unnecessary re-renders
 
 ### When to Use Normalized State?
 Use **Normalized State** only when it applies to your problem.
@@ -101,5 +101,5 @@ Normalized state can make store easier to maintain and UI more predictable.
 It is game changer when working with complex state using the **Redux pattern**, **React Redux**, **NgRx**, or any other similar library like **Zustand**.
 
 
-## Resources and References
+## Documentation and References
 - [Redux Official Docs: Normalizing State Shape](https://redux.js.org/usage/structuring-reducers/normalizing-state-shape)
