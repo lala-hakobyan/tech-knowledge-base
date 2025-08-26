@@ -26,7 +26,7 @@ Choosing the appropriate rendering model (**CSR**, **SSR**, **SSG**, **Hydration
 - [**Application Architecture Types**](./architecture-types-frontend.md)    
 Selecting the right architectural approach (**Monolith**, **Micro-frontends**, **Modular**, etc.) based on application complexity and needs to support **long-term maintainability** and **scalability**.
 
-- **State Management**   
+- [**State Management**](./state-management-frontend.md)  
 Applying effective strategies to handle and synchronize application state across components.
 
 - **Accessibility and SEO**   
