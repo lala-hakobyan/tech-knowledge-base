@@ -2,7 +2,7 @@
 **Frontend state management** is the process of **handling**, **synchronizing**, and **updating the data** (or "state") that determines a web application's behavior and appearance across components. 
 This can be done using built-in framework capabilities, such as **Angular Signals or RxJS**, **React Context API**, or using libraries like **Redux**, **Zustand**, and **NgRx**.
 
-Effective state management is crucial for long-term scalability and maintainability. It ensures a seamless user experience by keeping the UI consistent and making state changes predictable.
+Effective state management is crucial for long-term scalability and maintainability of front-end applications. It ensures a seamless user experience by keeping the UI consistent and making state changes predictable.
 
 ## Front-End State Management Terminology
 Let's explore the main terminology in front-end state management before we start exploring different tools and patterns:
