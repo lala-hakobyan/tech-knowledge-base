@@ -2312,6 +2312,7 @@ Educational repo for demonstrating how to enhance Performance and User Experienc
 - [The Ultimate Guide to Angular Evolution](https://houseofangular.io/the-ultimate-guide-to-angular-evolution/)   
   Discover how the latest Angular 20 version improves performance, DX, UX, and overall app efficiency, and how it affects your business.
 - [Introduction to NgOptimizedImage: Enhancing Performance and UX in Angular](https://www.youtube.com/watch?v=M_Rihr8zRnQ) by [Sonu Kapoor](https://www.linkedin.com/in/sonu-kapoor/)(Google Developer Expert)
+- [Angular: Dependency Compatibility Checker](https://www.dolmen.tools/en/angular/dependency-compatibility/npm)
 
 ### Design Patterns
 - [Angular Signals](https://angular.dev/guide/signals)
@@ -2348,6 +2349,7 @@ Educational repo for demonstrating how to enhance Performance and User Experienc
 
 ### Linting
 - [Create and customize Angular Best Practices linting rules](https://www.angular.courses/best-practices)
+- [NG Best Practices: Prettier & ESLint](https://www.angulararchitects.io/blog/best-practices-prettier-eslint/)
 
 ### Unit Testing
 - [Karma Configuration Guide](https://karma-runner.github.io/6.4/config/configuration-file.html)
