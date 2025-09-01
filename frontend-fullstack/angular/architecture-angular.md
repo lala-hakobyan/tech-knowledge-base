@@ -2300,6 +2300,7 @@ Educational repo for demonstrating how to enhance Performance and User Experienc
   Excellent resource for diving deeper into building scalable and maintainable Angular applications through varios front-end architecture types
   Angular Architects team lead by [Manfred Steyer](https://www.angulararchitects.io/en/team/manfred-steyer/) also organize workshops and colustancy on Angular Architecture topics.
 - [Angular Playground](https://angular.dev/playground)
+- [Build AI powered applications with Angular](https://angular.dev/ai)
 
 ### Angular Build Tools
 - [Angular CLI](https://angular.dev/tools/cli)
