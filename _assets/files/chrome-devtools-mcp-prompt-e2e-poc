@@ -1,0 +1,77 @@
+Open @http://local.react-note-app.com:3000/notes
+
+Here are the Important Rules that you need to follow:
+- Execute exactly the listed actions. Do not click any other element than the one specified.
+- Use the exact selectors below. If a selector returns 0 or more than 1 element, stop and return an error with a 300-char DOM excerpt.
+- Wait for network idle before the first action, and for the UI to be stable (no layout/size changes) for 50 ms before each click or type.
+- ALWAYS DO
+  - Use Chrome DevTools commands (mcp_chrome-devtools_*) instead of JavaScript evaluation for ALL browser interactions (query, click, fill, etc.).
+  - Use mcp_chrome-devtools_evaluate_script to find elements by CSS selector
+  - Use mcp_chrome-devtools_click to click elements (not JavaScript click)
+  - Use mcp_chrome-devtools_fill to fill forms (not JavaScript)
+  - Use mcp_chrome-devtools_take_snapshot only when needed for verification, not for finding elements
+  - When evaluate_script returns a UID, use that exact UID immediately in the next click/fill command. Do not take snapshots to verify, do not try to find the element again, do not question the UID. Trust the selector and use the returned UID directly.
+- DO NOT
+    - Take snapshots to find elements
+    - Use JavaScript click() methods
+    - Guess UIDs from snapshots
+
+Step 1 - Open and start capturing:
+- Wait for network idle.
+- Begin capturing console logs (fields: ts, level, text, url, line, column) and network request/response information.
+- Generate a timestamp in format `DD-MM-YYYY-HH-mm` (e.g. `15-10-2025-00-12`) and store it as `RUN_DATE`.
+
+Step 2 - Click ONLY the edit icon for the target note:
+- Resolve a SINGLE node via selector '[data-id="54"] .svg-link:first-child'
+- Do not take snapshots to verify, do not try to find the element again, do not question the UID.
+- Click immediately the found node ONCE. Do not click any other elements with class "svg-link".
+
+Step 3 - Wait for modal and edit the title:
+- Wait ONLY for 50ms until a dialog is present with this selector: '#modal'
+- Within the dialog, locate the title input using the first that exists with this selector: 'input[name="title"]'
+- Ensure the input is interactable and stable for 50 ms.
+- Focus the input, select all (Ctrl/Cmd + A), delete, then type EXACTLY: DIY Cat Toys Test1.
+
+Step 4 - Save and close:
+- Locate the save button inside the dialog using the first that exists with this selector: 'button[name="submitButton"]'
+- Ensure the button is visible and stable for 50 ms, then click it ONCE.
+- Wait until the dialog disappears (the dialog selectors from Step 3 should not exist).
+
+Step 5 - Verify the update:
+- On the list view, confirm that the element with the '[data-id="54"] h3' now contains  text "DIY Cat Toys Test1".
+- If not, return failure with a 300-char DOM excerpt around [data-id="54"].
+
+Step 6 - Summarize console and write report:
+- Group captured console logs into Errors, Warnings, Info (info + debug).
+- Group request and response information of the API requests.
+- Redact secrets using patterns: `["apiKey=\\S+", "Authorization: Bearer \\S+", "token=\\S+"]`
+- Provide counts per group and up to 2 example lines per group (after redaction).
+- Create Markdown at path: `apps/note-app-nextjs/e2e/report-${RUN_DATE}.md`
+  Use this EXACT template:
+
+# Note Edit E2E Report — ${RUN_DATE}
+- **Date:** ${RUN_DATE}
+- **URL:** http://local.react-note-app.com:3000/notes
+- **Edited Note ID:** 54
+- **Old Title:** DIY Cat Toys
+- **New Title:** DIY Cat Toys Test1
+- **Result:** {Success | Failed + short reason}
+
+## Console Summary
+| Type    | Count | Examples |
+|---------|-------|----------|
+| Errors  | {E}   | {up to 2 redacted examples} |
+| Warnings| {W}   | {up to 2 redacted examples} |
+| Info   | {I}   | {up to 2 redacted examples} |
+
+## Observations
+- {1–3 concise bullets on issues/patterns}
+
+## Suggested Fixes
+- [ ] {short, actionable suggestion}
+- [ ] {optional second suggestion}
+
+- Verify the file exists and is > 200 bytes, then return a final JSON object:
+  { "status": "ok" | "failed", "noteId": "54", "newTitle": "DIY Cat Toys Test1",
+   "reportPath": "apps/note-app-nextjs/e2e/report-${RUN_DATE}.md",
+   "counts": { "errors": E, "warnings": W, "info": I } }

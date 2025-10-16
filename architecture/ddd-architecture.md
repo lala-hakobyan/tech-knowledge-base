@@ -252,7 +252,7 @@ src/
 ```
 
 ### Diagram: DDD + Clean Architecture
-![Clean Architecture](../_assets/clean-architecture-and-ddd.png)
+![Clean Architecture](../_assets/images/clean-architecture-and-ddd.png)
 
 ## Documentation and References
 ### General

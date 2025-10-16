@@ -796,12 +796,12 @@ For example, in an **airline**, you might find the following sub-domains like **
 - In larger projects, it is common to assign one (or more contexts) to a **separate sub-team** in order to follow [Conway's Law](https://martinfowler.com/bliki/ConwaysLaw.html).
 - Ideally, there is **one bounded context per sub domain**, but for technical or organisational reasons, you can also decide to break down a sub-domain into several ones. A context map represents the relationships and dependencies between individual contexts:   
   <br>
-  ![Angular DDD Subdomains](../../_assets/angular-ddd-subdomains.PNG)
+  ![Angular DDD Subdomains](../../_assets/images/angular-ddd-subdomains.PNG)
 
 #### The Architecture Matrix
 For mapping in the source code, it makes sense to further subdivide the individual contexts into different modules:   
 <br>
-![Angular DDD Architecture](../../_assets/angular-ddd-architecture.PNG)
+![Angular DDD Architecture](../../_assets/images/angular-ddd-architecture.PNG)
 <br>
 
 A categorization of these modules increases clarity. [Nrwl](https://go.nx.dev/angular-patterns-ebook) suggests the following categories (originally for libraries), among others, which have proven to be helpful in our daily work:
@@ -826,7 +826,7 @@ In addition, two simple but **effective rules** can be introduced on the basis o
 #### Project Structure for the Architecture Matrix
 The module names are prefixed with the name of the respective module category. This means that you can see at first glance where the respective module is located in the architecture matrix. Within the modules are typical Angular building blocks such as components, directives, pipes, or services.   
 <br>
-![Angular DDD File Structure](../../_assets/angular-ddd-folder-structure.PNG)   
+![Angular DDD File Structure](../../_assets/images/angular-ddd-folder-structure.PNG)   
 <br>
 
 #### Enforcing your Architecture with Sheriff

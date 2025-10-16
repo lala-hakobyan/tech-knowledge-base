@@ -33,7 +33,7 @@ In this setup, the architecture is intentionally simplified into three layers: c
 - API Layer (Presentation Layer)
 - Infrastructure Layer
 
-![Clean Architecture](../_assets/clean-architecture.png)
+![Clean Architecture](../_assets/images/clean-architecture.png)
 
 ## Design Principles in Clean Architecture: Solid Principles
 Clean Architecture adheres to several design principles, also called [**SOLID Principles**](./solid-principles.md) that guide the structuring of software systems to promote maintainability, scalability, and testability.  

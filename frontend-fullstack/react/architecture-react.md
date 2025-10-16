@@ -1183,7 +1183,7 @@ Below are steps to start using CSS modules:
 
 3. This is how it will look like in browser, after compilation:
 
-    ![Compiled CSS Modules in the Browser](../../_assets/css-modules-compiled-example.PNG)
+    ![Compiled CSS Modules in the Browser](../../_assets/images/css-modules-compiled-example.PNG)
 
 #### Global CSS
 You can use global CSS to apply styles across your application.

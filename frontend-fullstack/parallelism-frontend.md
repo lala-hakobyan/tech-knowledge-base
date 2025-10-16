@@ -33,7 +33,7 @@
 - **Web Workers** also can make network requests using the `fetch()` or `XMLHttpRequest APIs`. Once created, a worker can send messages to the JavaScript code that created it by posting messages to an event handler specified by that code (and vice versa).
 - **Web Workers** can't access the `DOM` (the `window`, `document`, `page elements`, and so on) because workers and the main code run in completely separate threads.
 
-![Web Workers](../_assets/multithreading-web-worker-threads.PNG)
+![Web Workers](../_assets/images/multithreading-web-worker-threads.PNG)
 
 ### Web Worker Types
 There are a number of different types of workers:
