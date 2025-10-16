@@ -10,7 +10,9 @@ Here are the Important Rules that you need to follow:
   - Use mcp_chrome-devtools_click to click elements (not JavaScript click)
   - Use mcp_chrome-devtools_fill to fill forms (not JavaScript)
   - Use mcp_chrome-devtools_take_snapshot only when needed for verification, not for finding elements
-  - When evaluate_script returns a UID, use that exact UID immediately in the next click/fill command. Do not take snapshots to verify, do not try to find the element again, do not question the UID. Trust the selector and use the returned UID directly.
+  - When evaluate_script returns a UID, use that exact UID immediately in the next click/fill command.
+  Do not take snapshots to verify, do not try to find the element again, do not question the UID.
+  Trust the selector and use the returned UID directly.
 - DO NOT
     - Take snapshots to find elements
     - Use JavaScript click() methods
