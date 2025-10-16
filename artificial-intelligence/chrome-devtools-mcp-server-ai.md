@@ -112,7 +112,7 @@ You can ask your AI assistant to perform a comprehensive audit directly from you
 - **Example Prompt:**
   > "Run a Lighthouse accessibility audit on the product details page. List all images missing `alt` text and suggest descriptive text for them based on the component's props. Also, check for any color contrast issues."
 
-### Example: AI-Assisted E2e Test Case with Report Generation
+### Example: AI-Assisted E2e Test Case POC with Report Generation
 Below is a Proof-of-Concept (POC) example of a test case written in plain language for the Cursor IDE's AI assistant. With zero code, the assistant can automatically perform the test and generate a report.
 
 The main steps it performs are:
@@ -208,9 +208,11 @@ Step 6 - Summarize console and write report:
    "counts": { "errors": E, "warnings": W, "info": I } }
 ```
 
-**Important Notes**   
-This prompt was tested in the Cursor IDE, and the `Rules` section proved to be critical for ensuring the AI assistant executed the test correctly.   
-Specifically, without the instruction to `ALWAYS use Chrome DevTools commands (mcp_chrome-devtools_*)`, the AI assistant would fall back to using direct JavaScript commands to modify data. This resulted in non-realistic interactions because it bypassed the actual user event simulation that the Chrome DevTools MCP commands provide.
+**Important Notes: Challenges / Downsides**   
+- This prompt was tested in the Cursor IDE, and the `Rules` section proved to be critical for ensuring the AI assistant executed the test correctly.   
+Specifically, without the instruction to `ALWAYS DO - Use Chrome DevTools commands (mcp_chrome-devtools_*)`, the AI assistant would fall back to using direct JavaScript commands to modify data. This resulted in non-realistic interactions because it bypassed the actual user event simulation that the Chrome DevTools MCP commands provide.
+- The AI assistant wasn't always stable and sometimes ignored rules in the prompt (e.g., not obeying the given delay while it waits for the modal).
+
 
 ## Security Considerations
 Chrome DevTools MCP is a **trusted integration from Google**. However, because DevTools MCP can see everything in an open browser tab, caution is required when your AI client also connects to **other MCP servers** (e.g., file system, HTTP fetch, cloud tools) in the same session, as sensitive data can move between tools if not controlled.
