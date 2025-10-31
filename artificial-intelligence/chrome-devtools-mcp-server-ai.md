@@ -124,7 +124,8 @@ The main steps it performs are:
 - Validates that the changes were saved correctly.
 - Collects console logs and network requests throughout the process and generates a final report.
 
-You can grab the prompt below, or download it from [here](../_assets/files/chrome-devtools-mcp-prompt-e2e-poc).
+After experimenting different AI models in **Cursor IDE** and trying latest version of **Chrome Dev Tools MCP**, I found out that it works best with `claude-4.5-sonnet` model and this simplified prompt:   
+You can download the simplified prompt from [here](../_assets/files/chrome-devtools-mcp-prompt-e2e-poc-simplified).
 
 ```text
 Open @http://local.react-note-app.com:3000/notes
@@ -133,19 +134,7 @@ Here are the Important Rules that you need to follow:
 - Execute exactly the listed actions. Do not click any other element than the one specified.
 - Use the exact selectors below. If a selector returns 0 or more than 1 element, stop and return an error with a 300-char DOM excerpt.
 - Wait for network idle before the first action, and for the UI to be stable (no layout/size changes) for 50 ms before each click or type.
-- ALWAYS DO
-  - Use Chrome DevTools commands (mcp_chrome-devtools_*) instead of JavaScript evaluation for ALL browser interactions (query, click, fill, etc.).
-  - Use mcp_chrome-devtools_evaluate_script to find elements by CSS selector
-  - Use mcp_chrome-devtools_click to click elements (not JavaScript click)
-  - Use mcp_chrome-devtools_fill to fill forms (not JavaScript)
-  - Use mcp_chrome-devtools_take_snapshot only when needed for verification, not for finding elements
-  - When evaluate_script returns a UID, use that exact UID immediately in the next click/fill command. 
-  Do not take snapshots to verify, do not try to find the element again, do not question the UID. 
-  Trust the selector and use the returned UID directly.
-- DO NOT
-    - Take snapshots to find elements
-    - Use JavaScript click() methods
-    - Guess UIDs from snapshots
+- ALWAYS use Chrome DevTools commands (mcp_chrome-devtools_*) instead of JavaScript evaluation for ALL browser interactions (query, click, fill, etc.).
 
 Step 1 - Open and start capturing:
 - Wait for network idle.
@@ -211,7 +200,11 @@ Step 6 - Summarize console and write report:
 **Important Notes: Challenges / Downsides**   
 - This prompt was tested in the Cursor IDE, and the `Rules` section proved to be critical for ensuring the AI assistant executed the test correctly.   
 Specifically, without the instruction to `ALWAYS DO - Use Chrome DevTools commands (mcp_chrome-devtools_*)`, the AI assistant would fall back to using direct JavaScript commands to modify data. This resulted in non-realistic interactions because it bypassed the actual user event simulation that the Chrome DevTools MCP commands provide.
-- The AI assistant wasn't always stable and sometimes ignored rules in the prompt (e.g., not obeying the given delay while it waits for the modal).
+- The AI assistant wasn't always stable and sometimes ignored rules in [the initial prompt](../_assets/files/chrome-devtools-mcp-prompt-e2e-poc) I created (e.g., not obeying the given delay while it waits for the modal).  
+However, with the latest updates to **Chrome DevTools**, I was able to come up with [a more simplified version of the initial prompt](../_assets/files/chrome-devtools-mcp-prompt-e2e-poc-simplified), which performs much more stable.   
+Using the dedicated `claude-4.5-sonnet` model also gave me the best experience among all the models I tested.
+
+
 
 
 ## Security Considerations
