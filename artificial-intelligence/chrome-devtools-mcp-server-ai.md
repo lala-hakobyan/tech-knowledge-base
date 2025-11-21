@@ -125,7 +125,6 @@ The main steps it performs are:
 - Collects console logs and network requests throughout the process and generates a final report.
 
 After experimenting different AI models in **Cursor IDE** and trying latest version of **Chrome Dev Tools MCP**, I found out that it works best with `claude-4.5-sonnet` model and this simplified prompt:   
-You can download the simplified prompt from [here](../_assets/files/chrome-devtools-mcp-prompt-e2e-poc-simplified).
 
 ```text
 Open @http://local.react-note-app.com:3000/notes
@@ -204,8 +203,9 @@ Specifically, without the instruction to `ALWAYS DO - Use Chrome DevTools comman
 However, with the latest updates to **Chrome DevTools**, I was able to come up with [a more simplified version of the initial prompt](../_assets/files/chrome-devtools-mcp-prompt-e2e-poc-simplified), which performs much more stable.   
 Using the dedicated `claude-4.5-sonnet` model also gave me the best experience among all the models I tested.
 
-
-
+**Resources**
+- You can download the simplified prompt from [here](../_assets/files/chrome-devtools-mcp-prompt-e2e-poc-simplified).
+- You can also check out the [video on my LinkedIn post](https://www.linkedin.com/posts/lala-hakobyan_chromedevtools-mcp-testautomation-activity-7384583911139627008-_jYV?utm_source=share&utm_medium=member_desktop&rcm=ACoAABkSvQYBpJNmZiZXBqeqZcp_G7Mxj20Pglw) to see how a full end-to-end test is generated from a single prompt in my local React/Next.js POC project.
 
 ## Security Considerations
 Chrome DevTools MCP is a **trusted integration from Google**. However, because DevTools MCP can see everything in an open browser tab, caution is required when your AI client also connects to **other MCP servers** (e.g., file system, HTTP fetch, cloud tools) in the same session, as sensitive data can move between tools if not controlled.
