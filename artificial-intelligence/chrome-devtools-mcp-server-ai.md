@@ -1,5 +1,15 @@
-# Chrome DevTools MCP Server
-Chrome DevTools MCP Server lets your coding agent (such as Gemini, Claude, Cursor or Copilot) control and inspect a live Chrome browser. It gives your AI coding assistant access to the full power of Chrome DevTools for reliable automation, in-depth debugging, and performance analysis.
+# Chrome DevTools MCP Server (Public Preview)
+
+Google team launched the public preview of the **Chrome DevTools Model Context Protocol (MCP) server** in September 2025, bringing the power of Chrome DevTools directly to AI coding assistants.
+
+It addresses a fundamental limitation of coding agents: they cannot naturally observe how the code they generate behaves inside a real browser. Without visibility into runtime behavior, they operate with limited context.
+
+The Chrome DevTools MCP server changes this. AI coding assistants can debug web pages directly in Chrome and take advantage of DevTools debugging features and performance insights. This significantly improves their accuracy when identifying and fixing issues.
+
+Chrome DevTools MCP Server lets your **coding agent** (such as Gemini, Claude, Cursor or Copilot) **control and inspect a live Chrome browser**. It gives your AI coding assistant access to the full power of Chrome DevTools for reliable automation, in-depth debugging, and performance analysis.
+
+> **⚠️ Note:** The Chrome DevTools MCP Server is currently in **Public Preview** (versions `0.x.x`). It is intended for local debugging, development, and experimentation only. It is not intended for production usage yet - breaking changes may occur without major version updates.  
+> To use it, you need a **recent version of Node.js (22 or higher)** and the **latest stable Chrome** browser installed.
 
 ## How to install?
 ### Install Chrome DevTools MCP Server in Cursor IDE
@@ -23,7 +33,7 @@ Below are steps to install Chrome Dev Tools MCP Server in Cursor IDE:
 4. In the process when prompt is firstly executed, make sure to add `chrome-dev-tools` commands to **Allowlist** so that each time it doesn't ask permission to run the specific operation.
 5. Once the analysis is complete, a full report will be displayed with actionable suggestions for improvement.
 
-![Clean Architecture](../_assets/images/chrome-devtools-mcp-setup.png)
+![Chrome MCP Dev Tools Setup](../_assets/images/chrome-devtools-mcp-setup.png)
 
 ## Key Features
 - **Get performance insights:** Uses Chrome DevTools to record traces and extract actionable performance insights.
@@ -238,9 +248,9 @@ In the browser window controlled by the Chrome DevTools MCP server:
 - Store artifacts (logs, traces, HAR files, reports) **only in a private, temporary storage location** used by your CI/CD system. Do not keep them permanently-set them to be deleted automatically after a short time.
 - When sharing results (for example, in a pull request), include **only summaries or high-level reports**. If someone needs the full files, share a **secure link** that requires authorization to access them.
 
-> **Note:** A **HAR file (HTTP Archive)** records all browser network activity—every request, response, header, and sometimes even the response body. Because it can contain sensitive data such as API keys, cookies, or user information, always treat HAR files as confidential.
+> **Note:** A **HAR file (HTTP Archive)** records all browser network activity - every request, response, header, and sometimes even the response body. Because it can contain sensitive data such as API keys, cookies, or user information, always treat HAR files as confidential.
 
 
 ## Documentation and Resources
-- [Chrome Dev Tools MCP](https://github.com/mcp/chromedevtools/chrome-devtools-mcp)
+- [Chrome DevTools (MCP) for your AI agent](https://developer.chrome.com/blog/chrome-devtools-mcp)
 - [Chrome Dev Tools MCP GitHub repo](https://github.com/ChromeDevTools/chrome-devtools-mcp)
