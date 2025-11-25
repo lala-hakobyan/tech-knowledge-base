@@ -8,7 +8,8 @@ The Chrome DevTools MCP server changes this. AI coding assistants can debug web 
 
 Chrome DevTools MCP Server lets your **coding agent** (such as Gemini, Claude, Cursor or Copilot) **control and inspect a live Chrome browser**. It gives your AI coding assistant access to the full power of Chrome DevTools for reliable automation, in-depth debugging, and performance analysis.
 
-> **⚠️ Note:** The Chrome DevTools MCP Server is currently in **Public Preview** (versions `0.x.x`). It is intended for local debugging, development, and experimentation only. It is not intended for production usage yet - breaking changes may occur without major version updates.  
+> **⚠️ Note:** The Chrome DevTools MCP Server is currently in **Public Preview** (versions `0.x.x`). Preview mode is intended for local debugging, development, and experimentation only. It is not intended for production usage yet - breaking changes may occur without major version updates.  
+> Please check the official documentation by the time you read this, as it may already be in a stable release and safe for production use.  
 > To use it, you need a **recent version of Node.js (22 or higher)** and the **latest stable Chrome** browser installed.
 
 ## How to install?
