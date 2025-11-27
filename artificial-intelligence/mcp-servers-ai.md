@@ -83,7 +83,7 @@ In addition to making use of context provided by servers, clients may provide se
 ## Is MCP Secure?
 
 - MCP **does not have authentication, authorization, or encryption natively built in**, so developers have to implement that themselves or use a service that assists with implementation.
-- MCP **does not require the use of HTTPS**—instead running over HTTP in many implementations. It can therefore lack encryption and authentication unless developers proactively implement Transport Layer Security (TLS). Like any networking protocol, MCP can be vulnerable to impersonation or on-path attacks if TLS is not used.
+- MCP **does not require the use of HTTPS** - instead running over HTTP in many implementations. It can therefore lack encryption and authentication unless developers proactively implement Transport Layer Security (TLS). Like any networking protocol, MCP can be vulnerable to impersonation or on-path attacks if TLS is not used.
 - Because MCP **offers similar functionality to an API** (external parties requesting data and services), many of the major API security considerations also apply to MCP implementations.
 - Organizations making MCP servers available **must ensure that relevant security measures are in place**:
     - Confidential data is not exposed.
