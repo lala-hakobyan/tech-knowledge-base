@@ -1510,7 +1510,9 @@ Vercel is a popular platform for deploying and hosting React applications and ma
 ### Design Patterns
 - [Sharing State Between Components](https://react.dev/learn/sharing-state-between-components)
 - [React: Design Patterns](https://www.linkedin.com/learning/react-design-patterns-25656257) by [Shaun Wassell](https://www.linkedin.com/in/shaun-wassell), Linkedin Learning
+- [patterns.dev](https://www.patterns.dev/) by [Addy Osmani](https://www.linkedin.com/in/addyosmani/) and [Lydia Hallie](https://www.linkedin.com/in/lydia-hallie)
 - **Prioritizing Architecture over Framework in Web Development** - Presentation by [Alexandre Rivest](https://www.linkedin.com/in/alexandre-rivest-25a026a6/) at React Summit, June 2025
+
 
 ### Form Manipulation
 - **Validating the Web: The Evolution of Form Validation** by [Luis Oliveira](https://www.linkedin.com/in/luis-oliveira-tech) at React Summit, June 2025.
