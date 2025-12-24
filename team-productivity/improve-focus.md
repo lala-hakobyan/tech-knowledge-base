@@ -26,7 +26,7 @@ If you have them set up, each time you take on a task, ask yourself: **Is this t
 
 **2. Time Boxing**   
 Time boxing is a technique based on **setting an implementation intention**. It helps you decide **what** you are going to do and **when** you are going to do it and **how much time** you want to spend on each event / task.   
-A good way to timebox your plans is to block time in your **calendar**, or use a **spreadsheet** to track, hour by hour, what you will do. Planning your day or week ahead gives you a clear overview of what is traction and what is distraction for you.
+A good way to timebox your plans is to block time in your **calendar**, or use a **spreadsheet** to track, hour by hour, what you will do. Planning your day or week ahead gives you a clear overview of **what is traction** and **what is distraction** for you and allows you **not to exceed the time** allocated for specific tasks.
 
 As for me, I record all high-level events in Google Calendar, both personal and work-related. Then I plan my week using a simple Excel sheet - hour by hour, I add what I need to do each day, even if it is time for watching a movie or playing with my cats.
 You can find a simple template I am using [here](https://docs.google.com/spreadsheets/d/1D_xVgST4SD8jNJsTrAxO84gJ1evenqJyTFzbDjRb4Ho/edit?usp=sharing).

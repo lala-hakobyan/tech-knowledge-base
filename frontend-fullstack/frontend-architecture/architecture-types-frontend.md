@@ -82,7 +82,7 @@ These patterns answer questions like:
         - **Stores:** Hold the application's state and logic for a particular domain.
         - **Views:** Presentable UI, usually React components, that retrieve data from stores and dispatch actions.
     - **Use Cases**  
-      Ideal for applications with complex state management, aiming for predictable updates and easier debugging (e.g., **Redux** is built on Flux principles).
+      Useful for applications with **complex state management**, where views can create actions that update many stores, and stores can trigger changes that update many views. Flux aims for predictable updates and easier debugging (e.g., **Redux** follows a pattern built on Flux principles). However, Flux can add **unnecessary complexity when each view maps to one store**, and in that case, a simple separation between view and store is enough.
 
 
 ## Frontend Application Types

@@ -721,19 +721,22 @@ export function LogoutButton() {
 The official React UI bindings layer for [Redux](https://redux.js.org/tutorials/essentials/part-1-overview-concepts). It lets your React components read data from a Redux store, and dispatch actions to the store to update state.
 
 ### [Zustand Library](https://zustand.docs.pmnd.rs/getting-started/introduction)
-A lightweight, fast, and scalable state management library with minimal boilerplate.
-- **Zustand** has a comfortable API based on hooks. 
-- It isn't boilerplate or opinionated, but has enough convention to be explicit and **flux-like**.
-- It is a perfect choice for small to middle size projects.
-- In Next.js (with the App Router), any component that uses a Zustand store must include `"use client"` at the top, because Zustand relies on client-side React hooks like `useEffect`.
+A lightweight, fast, and scalable state management library based on an immutable state model with minimal boilerplate.   
+In Zustand, state can be updated without the use of **dispatched actions and reducers** found in other Flux libraries (e.g., `Redux`).
+
+- **Zustand** has a comfortable API based on hooks, allowing you to add **store actions directly to the store**.
+- While flexible and unopinionated, Zustand follows Flux conventions, and the team recommends adopting Flux-inspired patterns.
+- It is a perfect choice for **small- to middle-sized** projects. **If the application grows**, or you have a large application, Zustand supports splitting the store into slices to keep code maintainable and scalable over time.
+- **Only `set` (or `setState`) methods** should always be used to perform updates to your store. `set` (and `setState`) ensures the described update is correctly merged and listeners are appropriately notified.
+- In **Next.js** (with the App Router), any component using the **Zustand hook** must include `"use client"` at the top. While the core Zustand library is framework-agnostic vanilla JavaScript, its React integration relies on client-side hooks to trigger re-renders, which are not available in Server Components.
+- While popular in the React ecosystem, Zustand can be used in vanilla **JavaScript**, **TypeScript**, or with any other library or framework.
 
 Let's explore a small example of using a Zustand store in a **Next.js** project to fetch `notes` from an API, add a new note, and automatically update the UI when the store changes:
-- `AddNote` uses `addNote`, updates store
-- `NotesList` re-renders automatically when `notes` are updated, because Zustand triggers a re-render in any component that uses `notes` from the store.  
-  For example, when `addNote` is called in `AddNote` component, it updates the `notes` array, causing `NotesList` to re-render without any manual subscription logic.
+- The `AddNote` component uses the `addNote` action to update the store.
+- The `NotesList` component re-renders automatically when `notes` data is updated, because Zustand triggers a re-render in any component that uses `notes` from the store.  
+  For example, when `addNote` is called in the `AddNote` component, it updates the `notes` array, causing `NotesList` to re-render without any manual subscription logic.
 
-1. **Store (`store/notesStore.ts`)**  
-  Zustand store holds `notes`, `fetchNotes`, and `addNote`
+1. **Store (`store/notesStore.ts`)** Zustand store holds `notes` data and the actions `fetchNotes` and `addNote`.
     ```ts
     // store/notesStore.ts
     import { create } from 'zustand';
