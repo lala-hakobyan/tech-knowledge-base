@@ -74,11 +74,11 @@ Understanding the distinction is important: the **host** is the application user
 ### Core Client Features
 In addition to making use of context provided by servers, clients may provide several features to servers. These client features allow server authors to build richer interactions.
 
-| Feature | Explanation | Example |
-| :--- | :--- | :--- |
-| **Sampling** | Sampling allows servers to request LLM completions through the client, enabling an agentic workflow. This approach puts the client in complete control of user permissions and security measures. | A server for booking travel may send a list of flights to an LLM and request that the LLM pick the best flight for the user. |
-| **Roots** | Roots allow clients to specify which directories servers should focus on, communicating intended scope through a coordination mechanism. | A server for booking travel may be given access to a specific directory, from which it can read a user’s calendar. |
-| **Elicitation**| Elicitation enables servers to request specific information from users during interactions, providing a structured way for servers to gather information on demand. | A server booking travel may ask for the user’s preferences on airplane seats, room type or their contact number to finalise a booking. |
+| Feature         | Explanation                                                                                                                                                                                       | Example                                                                                                                                |
+|:----------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------|
+| **Sampling**    | Sampling allows servers to request LLM completions through the client, enabling an agentic workflow. This approach puts the client in complete control of user permissions and security measures. | A server for booking travel may send a list of flights to an LLM and request that the LLM pick the best flight for the user.           |
+| **Roots**       | Roots allow clients to specify which directories servers should focus on, communicating intended scope through a coordination mechanism.                                                          | A server for booking travel may be given access to a specific directory, from which it can read a user’s calendar.                     |
+| **Elicitation** | Elicitation enables servers to request specific information from users during interactions, providing a structured way for servers to gather information on demand.                               | A server booking travel may ask for the user’s preferences on airplane seats, room type or their contact number to finalise a booking. |
 
 ## Is MCP Secure?
 
@@ -109,6 +109,7 @@ Below are official resources and sources to find trusted MCP servers:
 - [MCP Servers: Official Registry](https://github.com/mcp)
 - [Model Context Protocol servers](https://github.com/modelcontextprotocol/servers)   
   This repository is a collection of reference implementations for the Model Context Protocol (MCP), as well as references to community-built servers and additional resources.
+- [Chrome DevTools MCP Server](https://github.com/ChromeDevTools/chrome-devtools-mcp)
 - [Find Awesome MCP Servers and Clients](https://mcp.so/)
 - [Awesome MCP Servers](https://mcpservers.org/)
 - [MCP Server Directory](https://www.pulsemcp.com/servers)
