@@ -1,4 +1,4 @@
-# How Browsers Work?
+# How Browsers Work *[Draft]*
 Modern front-end applications consist of many layers, and it's not always easy to debug and optimize them.  
 Therefore, it is essential to understand **how browsers work under the hood** in order to create performant applications, debug issues effectively, and optimize user experience.
 

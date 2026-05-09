@@ -1,4 +1,4 @@
-# Common Algorithmic Patterns 
+# Common Algorithmic Patterns *[Draft]* 
 Many developers approach coding platforms like LeetCode with the goal of solving as many problems as possible. While consistent practice is key, a far more effective strategy is to master the underlying **algorithmic patterns**.
 
 Recognizing a pattern is like having a blueprint. It allows you to quickly understand a problem's core structure and apply a proven, efficient solution, rather than trying to invent one from scratch every time. This guide is a collection of these essential patterns and data structures. For each one, we'll cover:
