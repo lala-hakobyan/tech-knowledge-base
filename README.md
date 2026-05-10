@@ -67,11 +67,10 @@ This knowledge base is licensed under the [Creative Commons Attribution-NonComme
 
 ### Repository Policy
 
-To keep this repository clean and focused, I am not accepting pull requests or issues for this project.
-
-If you have feedback or questions, feel free to reach out via LinkedIn or email.
+To keep this repository clean and focused, I am not accepting pull requests or issues for this project.   
+If you have feedback or questions, feel free to reach out via [LinkedIn](https://www.linkedin.com/in/lala-hakobyan) or [email](mailto:hakobyanlala@gmail.com).
 
 ## Author
 **Name:** Lala Hakobyan  
 **Email:** [hakobyanlala@gmail.com](mailto:hakobyanlala@gmail.com)  
-**Linkedin Profile:** [linkedin.com/in/lala-hakobyan-71aa64b8](https://www.linkedin.com/in/lala-hakobyan-71aa64b8/)  
+**Linkedin Profile:** [linkedin.com/in/lala-hakobyan](https://www.linkedin.com/in/lala-hakobyan)  
